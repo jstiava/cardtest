@@ -82,7 +82,8 @@ header .container {
   display: none;
 }
 .menu-item:hover .sub-menu,
-.menu-item a[aria-expanded="true"] .sub-menu
+.menu-item a[aria-expanded="true"] .sub-menu,
+.menu-item a:target .sub-menu
 {
   display: flex;
 }

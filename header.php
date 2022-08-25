@@ -24,7 +24,7 @@
           <section class="menu-bar">
                <div class="container">
                     <div class="row">
-                         <nav>
+                         <nav id="main_menu">
                               <?php $walker = new Menu_With_Description; ?>
                               <?php wp_nav_menu(array('theme_location' => 'my_main_menu', 'menu_class' => 'nav-menu', 'walker' => $walker)); ?>
                          </nav>
@@ -43,7 +43,7 @@
                               ?>
                          </h6>
                          <h1><?php the_title(); ?></h1>
-                         <?php the_field('description'); ?>
+                         <p><?php the_field('description'); ?></p>
                     </div>
                     <div class="figure" style="background-image: url(<?php the_post_thumbnail_url(); ?>);"></div>
                     <?php wp_reset_postdata(); ?>
