@@ -1,0 +1,96 @@
+body {
+  margin: 0;
+}
+
+/* UNIVERSAL CSS */
+* 
+{
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5
+{
+  font-family: var(--serif);
+  color: var(--grey-dark);
+}
+
+h6,
+p
+{
+  font-family: var(--sans);
+}
+
+h1
+{
+  font-size: var(--type1);
+}
+
+h2
+{
+  font-size: var(--type2);
+  line-height: 0.8;
+  margin: 0;
+}
+
+h3
+{
+  font-size: var(--type3);
+}
+
+h4
+{
+  font-size: var(--type4);
+}
+
+h5
+{
+  font-size: var(--type5);
+}
+
+h6
+{
+  font-size: var(--type6);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin: 0;
+}
+
+p
+{
+  font-size: var(--type7);
+  color: var(--grey-dark);
+  margin: 0;
+}
+
+p.lead-text
+{
+  font-size: var(--type4);
+  font-weight: 300;
+  color: var(--grey-text);
+  padding: 30px 0 30px 5%;
+  border-left: 2px solid var(--grey-text);
+}
+
+.wp-block-button__link {
+	width: fit-content;
+	height: fit-content;
+	padding: 10px 18px;
+	background-color: var(--red);
+  color: var(--white);
+	text-decoration: none;
+	font-family: var(--sans);
+	font-weight: 700;
+  border-radius: 1px;
+	font-size: var(--type7);
+	line-height: var(--height3);
+	text-transform: uppercase;
+}
+.wp-block-button.white-link .wp-block-button__link
+{
+  background-color: var(--white);
+  color: var(--red);
+}
