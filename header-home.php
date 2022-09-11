@@ -14,7 +14,7 @@
      <header>
           <section class="main-bar">
                <div class="container">
-                    <img id="wordmark" src="http://localhost/wordpress/wp-content/uploads/2022/05/card_logo.svg" alt="WashU Campus Card Services">
+                    <img id="wordmark" src="https://card-test.wustl.edu/wp-content/uploads/2022/08/card_logo.svg" alt="WashU Campus Card Services">
                     <div class="row" aria-labelledby="quick-actions">
                          <?php wp_nav_menu(array('theme_location' => 'quick_tools')); ?>
                     </div>
@@ -24,7 +24,7 @@
           <section class="menu-bar">
                <div class="container">
                     <div class="row">
-                         <nav aria-labelledby="main-menu">
+                         <nav id="main_menu" aria-labelledby="main-menu">
                               <?php $walker = new Menu_With_Description; ?>
                               <?php wp_nav_menu(array('theme_location' => 'my_main_menu', 'menu_class' => 'nav-menu', 'walker' => $walker)); ?>
                          </nav>
@@ -37,17 +37,18 @@
                if ($featured->have_posts()) : $featured->the_post();
           ?>
 
-          <section class="subheader" style="background-color: var(--grey-light);">
+          <section class="subheader">
                <div class="container">
-                    <div class="figure" style="background-image: url(<?php the_post_thumbnail_url() ?>);"></div>
+                    <div class="figure">
+                         <img src="<?php the_post_thumbnail_url() ?>">
+                    </div>
                     <div class="content">
                          <h6><?php 
                               $category = get_the_category();
                               echo $category[0]->name;
                          ?></h6>
                          <h3><?php the_title(); ?></h3>
-                         <p><?php the_field('description'); ?></p>
-                         <a href="<?php the_permalink(); ?>">Apply</a>
+                         <p><?php the_content(); ?></p>
                     </div>
                </div>
 

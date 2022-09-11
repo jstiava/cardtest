@@ -1,36 +1,56 @@
-const tablist = document.getElementById('main_menu');
-const tabs = tablist.querySelectorAll('.menu-item');
+console.log('script recognized');
 
-const makeLinksAccessibleReady = (link) => {
-     const linkID = link.id;
+const parentMenus = document.querySelector('.nav-menu').children;
+const parentLinks = [];
 
-     tabs.forEach((e) => {
-          const id = e.getAttribute("id");
-          if (id === linkID) {
-               e.removeAttribute("tabindex");
-               e.setAttribute("aria-selected", "true");
-          }
-          else {
-               e.setAttribute("tabIndex", "-1");
-               e.setAttribute("aria-selected", "false");
-          }
-     });
+console.log(parentMenus);
+
+const findParentLinks = () => {
+
+     for (var i = 0; i < parentMenus.length; i++) {
+          parentLinks.push(parentMenus[i].querySelector('a'));
+     }
+
 };
+findParentLinks();
 
-const handleTab = () => {
-     tabs.forEach((link) => {
-          link.addEventListener("click", function () {
-               makeLinksAccessibleReady(link);
+console.log(parentLinks);
+
+// const makeLinksAccessibleReady = (element) => {
+//      const linkID = element.id;
+
+//      tabs.forEach((e) => {
+//           const id = e.getAttribute("id");
+//           if (id === linkID) {
+//                e.removeAttribute("tabindex");
+//                e.setAttribute("aria-selected", "true");
+//           }
+//           else {
+//                e.setAttribute("tabIndex", "-1");
+//                e.setAttribute("aria-selected", "false");
+//           }
+//      });
+// };
+
+const handleTabs = () => {
+
+     parentLinks.forEach((element) => {
+          element.addEventListener("keyup", function (e) {
+               tabNow(element);
           });
      });
 
-     tabs.forEach((link) => {
-          link.addEventListener("keydown", function (e) {
-               if ((e.keyCode || e.which === 32)) {
-                    makeLinksAccessibleReady(link);
-                    link.click();
-               }
-          });
-     });
 };
+handleTabs();
 
+function tabNow(element) {
+     console.log("Register tab");
+
+     parentLinks.forEach((e) => {
+          e.classList.remove('ariaSelected');
+          e.setAttribute("aria-selected", "false");
+     });
+
+     element.setAttribute("aria-selected", "true");
+     element.classList.add('ariaSelected');
+};

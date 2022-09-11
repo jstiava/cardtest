@@ -9,12 +9,12 @@
      <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class(); ?>>	
 
      <header>
           <section class="main-bar">
                <div class="container">
-                    <a href="" style="padding: 0;"><img id="wordmark" src="http://localhost/wordpress/wp-content/uploads/2022/05/card_logo.svg" alt="WashU Campus Card Services"></a>
+                    <a href="<?php echo get_home_url(); ?>" style="padding: 0;"><img id="wordmark" src="http://localhost/wordpress/wp-content/uploads/2022/05/card_logo.svg" alt="WashU Campus Card Services"></a>
                     <div class="row">
                          <?php wp_nav_menu(array('theme_location' => 'quick_tools')); ?>
                     </div>
@@ -45,8 +45,16 @@
                          <h1><?php the_title(); ?></h1>
                          <p><?php the_field('description'); ?></p>
                     </div>
-                    <div class="figure" style="background-image: url(<?php the_post_thumbnail_url(); ?>);"></div>
-                    <?php wp_reset_postdata(); ?>
+                    <?php
+                    if (has_post_thumbnail()) {
+                    ?>
+                         <div class="figure">
+                              <img src="<?php the_post_thumbnail_url(); ?>">
+                         </div>
+                    <?php
+                    };
+
+                    wp_reset_postdata(); ?>
                </div>
           </section>
 

@@ -37,6 +37,7 @@ h3
   font-size: var(--type3);
   line-height: var(--height3);
   margin: 0;
+  /* letter-spacing: -0.03em; */
 }
 #content h3:not(:first-child)
 {

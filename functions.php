@@ -4,6 +4,7 @@
 function load_scripts()
 {
      // Scripts loaded in reverse hierarchy
+     wp_enqueue_script('accessible_header', get_template_directory_uri() . '/js/accessible_header.js', array(), '1.0', true);
      wp_enqueue_style('header', get_template_directory_uri() . '/css/header.css', array(), '1.0', 'all');
      wp_enqueue_style('content', get_template_directory_uri() . '/css/content.css', array(), '1.0', 'all');
      wp_enqueue_style('forms', get_template_directory_uri() . '/css/forms.css', array(), '1.0', 'all');
@@ -34,6 +35,7 @@ class Menu_With_Description extends Walker_Nav_Menu
           $attributes .= !empty($item->target) ? ' target="' . esc_attr($item->target) . '"' : '';
           $attributes .= !empty($item->xfn) ? ' rel="' . esc_attr($item->xfn) . '"' : '';
           $attributes .= !empty($item->url) ? ' href="' . esc_attr($item->url) . '"' : '';
+          $attributes .= 'aria-selected="false"';
 
           $item_output = $args->before;
           $item_output .= '<a' . $attributes . '>';

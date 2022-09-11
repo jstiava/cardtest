@@ -76,6 +76,18 @@ Tags: custom-header, custom-menu
     transform: translateY(0%);
   }
 }
+@keyframes popDown {
+  from {
+    display: none;
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
 
 .red {
   color: var(--red);
