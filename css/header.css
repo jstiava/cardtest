@@ -25,7 +25,7 @@ header .main-bar
 }
 header .menu-bar
 {
-  background-color: #ffffff;
+  background-color: var(--grey-dark);
 }
 .nav-menu > .menu-item
 {
@@ -46,7 +46,7 @@ header .container {
 
 .nav-menu .menu-item a
 {
-  color: var(--grey-dark);
+  color: var(--white);
 }
 .menu-item a,
 .menu-item a[aria-expanded="false"]
@@ -54,7 +54,6 @@ header .container {
   width: fit-content;
   height: fit-content;
   padding: 4px 0;
-  background-color: var(--white);
   text-decoration: none;
   font-family: var(--sans);
   font-weight: 700;
@@ -245,7 +244,7 @@ section.page-header
   display: flex;
   width: 100%;
   padding: 0;
-  background-color: var(--white);
+  background-color: var(--grey-dark);
 }
 
 section.subheader > .container,
@@ -272,7 +271,7 @@ section.page-header .figure img
 {
   width: 100%;
   height: 100%;
-  min-height: 70vh;
+  max-height: 70vh;
   object-fit: cover;
 }
 
@@ -304,10 +303,10 @@ section.subheader p
   display: block;
 }
 
-.section.subheader .content
+/* .section.subheader .content
 {
   background-color: var(--white);
-}
+} */
 
 section.subheader .content > *:not(:last-child)
 {
@@ -325,7 +324,7 @@ section.page-header > .container {
   margin: 0 auto;
   height: fit-content;
   max-height: 500px;
-  background-color: var(--white);
+  /* background-color: var(--white); */
 }
 section.page-header h6 {
   color: var(--red);

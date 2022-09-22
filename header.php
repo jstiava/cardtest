@@ -14,7 +14,7 @@
      <header>
           <section class="main-bar">
                <div class="container">
-                    <a href="<?php echo get_home_url(); ?>" style="padding: 0;"><img id="wordmark" src="http://localhost/wordpress/wp-content/uploads/2022/05/card_logo.svg" alt="WashU Campus Card Services"></a>
+                    <a href="<?php echo get_home_url(); ?>" style="padding: 0;"><img id="wordmark" src="http://localhost/wp_cardtest/wordpress/wp-content/uploads/2022/09/cardlogo.svg" alt="WashU Campus Card Services"></a>
                     <div class="row">
                          <?php wp_nav_menu(array('theme_location' => 'quick_tools')); ?>
                     </div>

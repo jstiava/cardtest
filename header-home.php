@@ -14,7 +14,7 @@
      <header>
           <section class="main-bar">
                <div class="container">
-                    <img id="wordmark" src="https://card-test.wustl.edu/wp-content/uploads/2022/08/card_logo.svg" alt="WashU Campus Card Services">
+                    <img id="wordmark" src="http://localhost/wp_cardtest/wordpress/wp-content/uploads/2022/09/cardlogo.svg" alt="WashU Campus Card Services">
                     <div class="row" aria-labelledby="quick-actions">
                          <?php wp_nav_menu(array('theme_location' => 'quick_tools')); ?>
                     </div>

@@ -1,5 +1,3 @@
-console.log('script recognized');
-
 const parentMenus = document.querySelector('.nav-menu').children;
 const parentLinks = [];
 
@@ -13,24 +11,6 @@ const findParentLinks = () => {
 
 };
 findParentLinks();
-
-console.log(parentLinks);
-
-// const makeLinksAccessibleReady = (element) => {
-//      const linkID = element.id;
-
-//      tabs.forEach((e) => {
-//           const id = e.getAttribute("id");
-//           if (id === linkID) {
-//                e.removeAttribute("tabindex");
-//                e.setAttribute("aria-selected", "true");
-//           }
-//           else {
-//                e.setAttribute("tabIndex", "-1");
-//                e.setAttribute("aria-selected", "false");
-//           }
-//      });
-// };
 
 const handleTabs = () => {
 

@@ -82,6 +82,8 @@ function stiavacard_add_editor_styles() {
 
 add_action('after_setup_theme', 'stiavacard_add_editor_styles', 0);
 
-if ( function_exists('register_sidebar'))
+if ( function_exists('register_sidebar')) {
      register_sidebar();
+}
+
 ?>
