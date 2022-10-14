@@ -33,7 +33,7 @@
           </section>
 
           <?php 
-               $featured = new WP_Query('post_type=post&cat=13');
+               $featured = new WP_Query('post_type=post&cat=7');
                if ($featured->have_posts()) : $featured->the_post();
           ?>
 
@@ -43,10 +43,6 @@
                          <img src="<?php the_post_thumbnail_url() ?>">
                     </div>
                     <div class="content">
-                         <h6><?php 
-                              $category = get_the_category();
-                              echo $category[0]->name;
-                         ?></h6>
                          <h3><?php the_title(); ?></h3>
                          <p><?php the_content(); ?></p>
                     </div>

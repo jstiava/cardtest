@@ -32,7 +32,7 @@
                </div>
           </section>
 
-          <section class="page-header">
+          <section class="page-header" style="background-color: <?php the_field('primary_color'); ?>">
                <div class="container">
                     <div class="content">
                          <h6 class="parent-title">

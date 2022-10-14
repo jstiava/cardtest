@@ -27,7 +27,6 @@
                endif;
                wp_reset_postdata();
                ?>
-               <?php get_sidebar(); ?>
           </div>
      </div>
 </div>

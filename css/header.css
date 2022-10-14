@@ -25,7 +25,7 @@ header .main-bar
 }
 header .menu-bar
 {
-  background-color: var(--grey-dark);
+  background-color: var(--white);
 }
 .nav-menu > .menu-item
 {
@@ -46,7 +46,7 @@ header .container {
 
 .nav-menu .menu-item a
 {
-  color: var(--white);
+  color: var(--grey-dark);
 }
 .menu-item a,
 .menu-item a[aria-expanded="false"]
@@ -99,7 +99,7 @@ header .container {
 .sub-menu a {
   display: flex;
   flex-direction: column;
-  font-size: var(--type8);
+  font-size: 0.85rem;
   line-height: 1.44;
   text-transform: uppercase;
   color: var(--red) !important;
@@ -109,12 +109,12 @@ header .container {
 .sub-menu .menu-item.quick a,
 .sub-menu .menu-item.direct a
 {
-  max-width: 200px;
+  max-width: 300px;
   padding-left: 0;
 }
-.sub-menu .menu-item.emphasis span,
-.sub-menu .menu-item.quick span,
-.sub-menu .menu-item.direct span
+.sub-menu .menu-item.emphasis span.sub,
+.sub-menu .menu-item.quick span.sub,
+.sub-menu .menu-item.direct span.sub
 {
   transform: translateX(0);
 }
@@ -123,9 +123,9 @@ header .container {
   display: flex;
   content: " ";
   position: absolute;
-  background-image: url(http://localhost/wordpress/wp-content/uploads/2022/07/nwArrow.svg);
+  background-image: url(http://localhost/wp_cardtest/wordpress/wp-content/uploads/2022/09/arrow_out.svg);
   background-size: cover; background-position: center;
-  width: 9px; height: 9px;
+  width: 10px; height: 10px;
   transform: translateY(4px) translateX(-20px);
 }
 .sub-menu .menu-item.emphasis a::after,
@@ -135,11 +135,12 @@ header .container {
   display: flex;
   content: " ";
   position: absolute;
-  background-image: url(http://localhost/wordpress/wp-content/uploads/2022/07/nwArrow.svg);
+  background-image: url(http://localhost/wp_cardtest/wordpress/wp-content/uploads/2022/09/arrow_right.svg);
   background-size: cover; background-position: center;
-  width: 9px; height: 9px;
-  transform: translateY(4px) translateX(215px) rotate(45deg);
+  width: 15px; height: 12px;
+  transform: translateY(4px) translateX(215px);
 }
+
 .sub-menu .menu-item.quick a::after
 {
   filter: brightness(0) invert(1);
@@ -169,11 +170,17 @@ header .container {
   margin: 0;
   background-color: var(--white);
 }
+.sub-menu li.brief
+{
+  padding: 12px 25px 8px 25px;
+  margin: 0;
+  background-color: var(--white);
+}
 .sub-menu li.emphasis
 {
   background-color: var(--grey-light);
 }
-.sub-menu li.quick span
+.sub-menu li.quick span.sub
 {
   display: none;
 }
@@ -188,19 +195,22 @@ header .container {
 .sub-menu li.quick.teal {background-color: var(--blue-teal);}
 .sub-menu li.quick.red {background-color: var(--red);}
 .sub-menu li.quick.orange {background-color: var(--orange);}
+.sub-menu li.white {background-color: var(--white);}
 .sub-menu li * {
   background: none;
+  transition: 0.2s;
 }
 .sub-menu li:hover
 {
-  filter: brightness(0.95);
+  background-color: #e9e9e9;
+  transition: 0.2s;
 }
 
 /* .sub-menu li:not(:last-child)
 {
   margin-bottom: 5px;
 } */
-.sub-menu span
+.sub-menu span.sub
 {
   display: inline-block;
   margin-top: 6px;
@@ -210,6 +220,44 @@ header .container {
   font-weight: 400;
   color: var(--grey-dark);
   transform: translateX(-20px);
+}
+.sub-menu span.menu_title {
+  display: flex;
+  align-items: center;
+}
+.sub-menu .menu-item.icon span.menu_title {
+  max-width: 60%;
+}
+
+
+.sub-menu .menu-item.icon._washuid span.menu_title::before,
+.sub-menu .menu-item.icon._tempcard span.menu_title::before,
+.sub-menu .menu-item.icon._bearbucks span.menu_title::before
+{
+  display: flex;
+  content: " ";
+  position: absolute;
+  background-size: contain; background-position: center; background-repeat: no-repeat;
+  width: 40px; height: 40px;
+  transform: translateX(-50px);
+}
+.sub-menu .menu-item.icon._washuid span.menu_title::before
+{
+  background-image: url(http://localhost/wp_cardtest/wordpress/wp-content/uploads/2022/09/WashUCardServices_420x420-2.png);
+}
+.sub-menu .menu-item.icon._tempcard span.menu_title::before
+{
+  background-image: url(http://localhost/wp_cardtest/wordpress/wp-content/uploads/2022/09/washushieldcard.png);
+}
+.sub-menu .menu-item.icon._bearbucks span.menu_title::before
+{
+  background-image: url(http://localhost/wp_cardtest/wordpress/wp-content/uploads/2022/09/OutlineBearBucksIcon-1.png);
+}
+.sub-menu .menu-item.icon._washuid span.menu_title,
+.sub-menu .menu-item.icon._tempcard span.menu_title,
+.sub-menu .menu-item.icon._bearbucks span.menu_title 
+{
+  transform: translateX(55px);
 }
 
 /* Main-Bar */
@@ -222,7 +270,7 @@ header .container {
 {
   padding: 8px 18px;
   font-size: var(--type7);
-  color: var(--red);
+  color: var(--white);
   border: 3px solid var(--white);
   text-transform: uppercase;
   box-shadow: 0 8px 18px rgb(0 0 0 / 15%);
@@ -244,19 +292,20 @@ section.page-header
   display: flex;
   width: 100%;
   padding: 0;
-  background-color: var(--grey-dark);
+  background-color: var(--white);
 }
 
 section.subheader > .container,
 section.page-header > .container
 {
   display: flex;
-  width: 90vw;
+  align-items: center;
+  width: 100%;
   height: fit-content;
   max-height: 550px;
-  align-items: flex-start;
+  align-items: center;
+  margin: 0 auto;
 }
-
 section.subheader .figure,
 section.page-header .figure
 {
@@ -313,23 +362,14 @@ section.subheader .content > *:not(:last-child)
   margin-bottom: 15px;
 }
 
-section.subheader .content h6
+section.subheader .content h6,
+section.page-header h6
 {
   color: var(--red);
 }
 
-section.page-header > .container {
-  display: flex;
-  width: 100%;
-  margin: 0 auto;
-  height: fit-content;
-  max-height: 500px;
-  /* background-color: var(--white); */
-}
-section.page-header h6 {
-  color: var(--red);
-}
-section.page-header .content > *:not(:last-child){
+
+section.page-header .content > *:not(:last-child) {
   margin-bottom: 15px;
 }
 
@@ -341,3 +381,4 @@ section.page-header .content::after
   height: 5px;
   background-color: var(--red);
 }
+

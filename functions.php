@@ -39,8 +39,8 @@ class Menu_With_Description extends Walker_Nav_Menu
 
           $item_output = $args->before;
           $item_output .= '<a' . $attributes . '>';
-          $item_output .= $args->link_before . apply_filters('the_title', $item->title, $item->ID) . $args->link_after;
-          $item_output .= '<br /><span class="sub">' . $item->description . '</span>';
+          $item_output .= $args->link_before . '<span class="menu_title">' . apply_filters('the_title', $item->title, $item->ID) . '</span>' . $args->link_after;
+          $item_output .= '<span class="sub">' . $item->description . '</span>';
           $item_output .= '</a>';
           $item_output .= $args->after;
 
