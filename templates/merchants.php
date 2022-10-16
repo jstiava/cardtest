@@ -21,7 +21,6 @@ Template Name: Merchants
                          ?>
                          <p><?php the_title(); ?></p>
                          <?php
-                         // get_template_part('template-parts/content', 'merchant');
 
                     endwhile;
                endif;
