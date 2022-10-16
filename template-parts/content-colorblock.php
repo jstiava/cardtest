@@ -1,9 +1,4 @@
-<article 
-     <?php post_class(array('class' => 'colorblock')); ?>
-     style="background-color: var(--yellow);"
-     >
-
+<article class="colorblock warning" style="background-color: var(--yellow);">
      <h5><?php the_title(); ?></h5>
-     <p><?php the_field('description'); ?></p>
-     
+     <a href="<?php the_permalink(); ?>">See details</a>
 </article>

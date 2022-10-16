@@ -243,7 +243,7 @@ header .container {
 }
 .sub-menu .menu-item.icon._washuid span.menu_title::before
 {
-  background-image: url(http://localhost/wp_cardtest/wordpress/wp-content/uploads/2022/09/WashUCardServices_420x420-2.png);
+  background-image: url(../icons/icon_washuid.png);
 }
 .sub-menu .menu-item.icon._tempcard span.menu_title::before
 {
@@ -283,6 +283,18 @@ header .container {
 }
 
 /*
+Absolute Menu fixed to the top of the screen
+*/
+section.fixed {
+  position: fixed;
+  display: none;
+  top: 0;
+  z-index: 1000;
+  animation-name: popDown; animation-fill-mode: both; animation-duration: 0.3s;
+  box-shadow: 0 8px 18px rgb(0 0 0 / 15%);
+}
+
+/*
 Header-Home Subheader Styles
 */
 
@@ -294,6 +306,10 @@ section.page-header
   padding: 0;
   background-color: var(--white);
 }
+section.subheader
+{
+  height: 70vh;
+}
 
 section.subheader > .container,
 section.page-header > .container
@@ -301,8 +317,8 @@ section.page-header > .container
   display: flex;
   align-items: center;
   width: 100%;
-  height: fit-content;
-  max-height: 550px;
+  height: 100%;
+  /* max-height: 550px; */
   align-items: center;
   margin: 0 auto;
 }
@@ -360,8 +376,12 @@ section.subheader p
 section.subheader .content > *:not(:last-child)
 {
   margin-bottom: 15px;
+  margin-right: 10%;
 }
 
+section.subheader p {
+  font-size: var(--type7);
+}
 section.subheader .content h6,
 section.page-header h6
 {

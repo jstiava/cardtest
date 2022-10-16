@@ -14,9 +14,15 @@
      </div>
      <div class="sidebar front-page">
           <div class="container">
+               <h6>Alerts</h6>
                <?php
 
-               $warnings = new WP_Query('post_type=post&cat=9&post_per_page=3');
+               $args = array(
+                    'post_type' => 'post',
+                    'category_name' => 'warning',
+                    'post_per_page' => '3'
+               );
+               $warnings = new WP_Query($args);
                if ($warnings->have_posts()) :
                     
                     while ($warnings->have_posts()) :
@@ -27,6 +33,8 @@
                endif;
                wp_reset_postdata();
                ?>
+               <a href="<?php echo get_home_url() . "/category/warning/"; ?>">See all alerts</a>
+               <h6>Events</h6>
           </div>
      </div>
 </div>

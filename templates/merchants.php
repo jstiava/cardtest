@@ -1,8 +1,6 @@
-<?php
-/*
+<!-- 
 Template Name: Merchants
-*/
-?>
+-->
 
 <?php get_header(); ?>
 
@@ -11,12 +9,19 @@ Template Name: Merchants
           <div class="container merchant_list" style="flex-wrap: wrap;">
                <?php
 
-               $warnings = new WP_Query('post_type=post&cat=7');
-               if ($warnings->have_posts()) :
+               $args = array(
+                    'post_type' => 'post',
+                    'category_name' => 'merchant',
+               );
+               $merchants = new WP_Query($args);
+               if ($merchants->have_posts()) :
 
-                    while ($warnings->have_posts()) :
-                         $warnings->the_post();
-                         get_template_part('template-parts/content', 'merchant');
+                    while ($merchants->have_posts()) :
+                         $merchants->the_post();
+                         ?>
+                         <p><?php the_title(); ?></p>
+                         <?php
+                         // get_template_part('template-parts/content', 'merchant');
 
                     endwhile;
                endif;

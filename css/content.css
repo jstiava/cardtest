@@ -109,7 +109,7 @@ section.page-header p
 p.lead-text
 {
   padding: 30px 0 30px 5vw;
-  border-left: 2px solid var(--grey-text);
+  border-left: 2px solid var(--grey-light);
 }
 
 :not(p) .wp-block-button__link,
@@ -135,6 +135,9 @@ p.lead-text
   color: var(--red);
 }
 
+/*
+* Links included in paragraphs 
+*/
 p > a {
   color: var(--red-light);
   text-underline-offset: 4px;
@@ -179,12 +182,12 @@ p > a {
 }
 .sidebar.front-page {
   position: absolute;
-  margin-top: -5%;
+  /* margin-top: -25px; */
   margin-left: 60%;
   width: 35%;
   padding: 5%;
-  border-left: 2px solid var(--grey-text);
-  border-top: 2px solid var(--grey-text);
+  border-left: 2px solid var(--grey-light);
+  border-top: 2px solid var(--grey-light);
   background-color: var(--white);
 }
 
@@ -194,11 +197,25 @@ p > a {
 .colorblock > *:not(:last-child) {
   margin-bottom: 15px;
 }
+/* Warning posts */
+.colorblock :is(p, h5, h6) {
+  padding: 0 !important;
+}
+.colorblock.warning a {
+  color: var(--red);
+	text-decoration: none;
+	font-family: var(--sans);
+	font-weight: 700;
+  border-radius: 1px;
+	font-size: var(--type7);
+	line-height: var(--height3);
+	/* text-transform: uppercase; */
+}
 
 #content:not(.front-page) > .container {
   width: 70vw;
   padding: 90px 7.5vw;
-  border-right: 2px solid var(--grey-text);
+  border-right: 2px solid var(--grey-light);
 }
 #content:not(.front-page) > .container > *:not(:last-child){
   margin-bottom: 15px;
@@ -260,12 +277,38 @@ article.merchants {
 .wp-block-washu-card {
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  width: 100%;
   height: fit-content;
   box-shadow: 0 8px 18px rgb(0 0 0 / 15%);
   border-radius: 5px;
   overflow: hidden;
   border-bottom: 5px solid var(--red-light);
+}
+.wp-block-washu-card:not(.washu-card__style-text-header) {
+  flex-direction: row;
+}
+.wp-block-washu-card:not(.washu-card__style-text-header) 
+.washu-card__image 
+{
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  height: unset;
+  object-fit: cover;
+}
+.wp-block-washu-card:not(.washu-card__style-text-header) 
+.washu-card__image
+img  
+{
+  height: 100%;
+  object-fit: cover;
+}
+.wp-block-washu-card:not(.washu-card__style-text-header) 
+.washu-card__grouping {
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+  padding: 40px 0;
 }
 .wp-block-washu-card figure {
   width: 100%;
@@ -283,4 +326,12 @@ article.merchants {
 .washu-card__title
 {
   padding: 0 50px 0px 50px;
+}
+.washu-card__style-text-header
+.washu-card__grouping
+{
+  padding-top: 55px;
+}
+.washu-card .wp-block-buttons {
+  padding-top: 25px;
 }
