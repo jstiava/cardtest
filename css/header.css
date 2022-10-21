@@ -12,7 +12,6 @@ header
 {
   max-height: 50px;
 }
-
 header section
 {
   width: 100%;
@@ -312,6 +311,7 @@ section.page-header
 section.subheader
 {
   height: 70vh;
+  max-height: 450px;
 }
 
 section.subheader > .container,

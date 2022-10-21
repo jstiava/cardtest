@@ -32,6 +32,12 @@
                </div>
           </section>
 
+          <?php 
+          if (is_user_logged_in()) {
+               echo "<style>#scroll-menu {top: var(--wp-admin--admin-bar--height) !important;}</style>";
+          }
+          ?>
+
           <!-- Fixed element -->
           <section id="scroll-menu" class="menu-bar fixed">
                <div class="container">
@@ -64,7 +70,6 @@
                          <p><?php the_content(); ?></p>
                     </div>
                </div>
-
           </section>
 
           <?php

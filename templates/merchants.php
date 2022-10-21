@@ -1,6 +1,4 @@
-<!-- 
-Template Name: Merchants
--->
+<!-- Template Name: Merchants -->
 
 <?php get_header(); ?>
 

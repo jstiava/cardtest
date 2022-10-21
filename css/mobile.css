@@ -1,0 +1,5 @@
+@media only screen and (max-width: 10em) {
+     .menu-quick-tools {
+          display: none;
+     }
+}
