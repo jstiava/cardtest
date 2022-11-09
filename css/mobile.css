@@ -1,5 +1,87 @@
-@media only screen and (max-width: 10em) {
-     .menu-quick-tools {
+@media only screen and (max-width: 60em) {
+
+     /* Headers */
+     h1 {font-size: var(--type2);}
+     h2 {font-size: var(--type3);}
+     h3 {font-size: var(--type4);}
+     h4 {font-size: var(--type5);}
+     h5, p {font-size: var(--type6);}
+     h6 {font-size: var(--type7);}
+
+     /*  */
+     .menu-bar,
+     #scroll-menu,
+     .menu-quick-tools-container
+     {
+          display: none !important;
+     }
+     .menu-bar {
           display: none;
+     }
+
+
+     /* Make the subheader verticle */
+     section:is(.subheader, .page-header) {
+          height: fit-content;
+          max-height: unset;
+     }
+     section:is(.subheader, .page-header) > .container {
+          flex-direction: column;
+          align-items: flex-start;
+     }
+     section.page-header .container {
+          flex-direction: column-reverse;
+     }
+     section:is(.subheader, .page-header) .figure {
+          width: 100%;
+          height: fit-content;
+     }
+     section:is(.subheader, .page-header) .figure img {
+          height: 40vh;
+     }
+     section:is(.subheader, .page-header) .content {
+          width: 100%;
+          max-width: 50em;
+     }
+
+     /* Content */
+     .wrapper {
+          flex-direction: column;
+     }
+     .wrapper .sidebar.front-page 
+     {
+          position: relative;
+          margin-left: 0;
+          width: 100%;
+          border: 2px solid var(--grey-light);
+     }
+
+     /* Page Content */
+     #content .container
+     {
+          width: 100% !important;
+          padding: 15vw 10vw !important;
+          border: none !important;
+     }
+
+     .content .container > *:not(:last-child), .sidebar .container > *:not(:last-child) {
+          margin-bottom: 30px;
+     }
+
+     footer {
+          padding: 10vh 10vw calc(10vh + 40px) 10vw !important;
+     }
+}
+
+@media only screen and (max-width: 40em) {
+     #wordmark {
+          max-width: 70vw;
+          margin: 0;
+     }
+     section:is(.subheader, .page-header) .content {
+          padding: 15vw 10vw;
+     }
+     .sidebar.front-page {
+          padding: 15vw 10vw;
      }
 }
