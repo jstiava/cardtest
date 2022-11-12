@@ -37,7 +37,7 @@
 .location {
     display: flex;
     padding: 40px;
-    width: 50%;
+    width: 100%;
     border-radius: 3px;
     margin-bottom: 5px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
@@ -45,7 +45,7 @@
 .location .content {
     display: flex;
     flex-direction: column;
-    width: fit-content;
+    width: 100%;
     height: fit-content;
     color: inherit;
 }
@@ -80,3 +80,27 @@
     order: 2;
 }
 
+
+.location img.wordmark {
+    max-width: 50%;
+    margin-bottom: 10px;
+}
+
+.region,
+.market 
+{
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    height: fit-content;
+}
+
+.market {
+    padding: 20px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.market
+> .location {
+    box-shadow: none;
+}
