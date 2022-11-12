@@ -1,4 +1,6 @@
-<!-- Template Name: Merchants -->
+<!-- 
+Template Name: Merchants 
+-->
 
 <?php get_header(); ?>
 
@@ -9,7 +11,7 @@
 
                $args = array(
                     'post_type' => 'post',
-                    'category_name' => 'merchant',
+                    'category_name' => 'merchants',
                );
                $merchants = new WP_Query($args);
                if ($merchants->have_posts()) :

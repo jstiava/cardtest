@@ -1,8 +1,6 @@
 let lastKnownScrollPosition = 0;
 let ticking = true;
 
-console.log('')
-
 function triggerScrollMenu() {
      document.getElementById('scroll-menu').style.display = 'flex';
 }

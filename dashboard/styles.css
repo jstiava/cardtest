@@ -1,0 +1,82 @@
+#dining_dashboard 
+{
+    padding: 20px;
+    border-radius: 4px;
+}
+
+#datetime,
+#preferences,
+#regions
+{
+    margin-left: 10px;
+    font-family: 'Source Sans Pro';
+    border: 2px solid var(--grey-light);
+    font-size: 18px;
+    height: 45px;
+    padding: 5px 10px;
+    font-weight: 700;
+}
+
+#control_panel {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+#control_panel > .row > .row:not(:last-child) {
+    padding-right: 15px;
+}
+
+.page-header {
+    display: none !important;
+}
+
+#content {
+    padding-top: 50px !important;
+}
+
+.location {
+    display: flex;
+    padding: 40px;
+    width: 50%;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+}
+.location .content {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    color: inherit;
+}
+.location .content *:not(a) {
+    color: inherit;
+}
+.location .content a {
+    margin-top: 20px !important;
+}
+
+
+.location p:first-child {
+    font-weight: 600;
+    font-size: 24px;
+}
+.location p {
+    font-size: 16px;
+}
+
+.location img {
+    height: 100%;
+    max-height: 150px;
+    margin-right: 30px;
+}
+
+
+.location.open {
+    order: 1;
+}
+.location.closed {
+    opacity: 50%;
+    order: 2;
+}
+

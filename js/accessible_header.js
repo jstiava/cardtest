@@ -1,8 +1,6 @@
 const parentMenus = document.querySelector('.nav-menu').children;
 const parentLinks = [];
 
-console.log(parentMenus);
-
 const findParentLinks = () => {
 
      for (var i = 0; i < parentMenus.length; i++) {

@@ -89,6 +89,31 @@ Tags: custom-header, custom-menu
   }
 }
 
+#dining_dashboard h6 {
+  margin-bottom: 15px;
+}
+
 .red {
   color: var(--red);
+}
+
+.row,
+.col
+{
+  display: flex;
+}
+.col {
+  flex-direction: column;
+}
+.width-full
+{
+  width: 100%;
+}
+.space-between
+{
+  justify-content: space-between;
+}
+.align-items
+{
+  align-items: center;
 }

@@ -28,7 +28,8 @@
                wp_reset_postdata();
                ?>
                <a href="<?php echo get_home_url() . "/category/warning/"; ?>">See all alerts</a>
-               <h6>Events</h6>
+               
+               <?php get_sidebar(); ?>
           </div>
      </div>
 </div>

@@ -15,8 +15,16 @@
           <section class="main-bar">
                <div class="container">
                     <img id="wordmark" src="<?php echo esc_url( get_template_directory_uri() . '/images/masthead.svg' ); ?>" alt="WashU Campus Card Services">
+                    <img id="wordmark_mobile" src="<?php echo esc_url( get_template_directory_uri() . '/images/washu_card_mobile_logo.svg' ); ?>" alt="WashU Campus Card Services">
+                    <img id="wordmark_mobile_small" src="<?php echo esc_url( get_template_directory_uri() . '/images/washu_small_mobile.svg' ); ?>" alt="WashU Campus Card Services">
                     <div class="row" aria-labelledby="quick-actions">
                          <?php wp_nav_menu(array('theme_location' => 'quick_tools')); ?>
+                    </div>
+                    <!-- Mobile menu button -->
+                    <div id="mobile_menu_trigger_button">
+                         <div class="menu_horizontal_piece"></div>
+                         <div class="menu_horizontal_piece"></div>
+                         <div class="menu_horizontal_piece"></div>
                     </div>
                </div>
           </section>
@@ -35,7 +43,7 @@
           <?php 
           if (is_user_logged_in()) {
                echo "<style>#scroll-menu {top: var(--wp-admin--admin-bar--height) !important;}</style>";
-          }
+          };
           ?>
 
           <!-- Fixed element -->
@@ -50,6 +58,7 @@
                </div>
           </section>
 
+          <!-- Load the subheader -->
           <?php 
                $args = array(
                     'post_type' => 'post',

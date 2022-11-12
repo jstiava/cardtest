@@ -58,6 +58,7 @@
      background-color: transparent;
      color: var(--grey-text);
      text-transform: none;
+     text-decoration: unset;
      list-style-type: none;
      padding: 0;
      background-image: linear-gradient(#353535, #353535);

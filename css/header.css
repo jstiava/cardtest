@@ -13,6 +13,14 @@ header
   max-height: 50px;
   margin: 10px 0;
 }
+#wordmark_mobile,
+#wordmark_mobile_small,
+#mobile_menu_trigger_button
+{
+  display: none;
+  max-height: 50px;
+  margin: 10px 0;
+}
 header section
 {
   width: 100%;
@@ -135,11 +143,12 @@ header .container {
 .sub-menu .menu-item.quick a::after,
 .sub-menu .menu-item.direct a::after
 {
-  display: flex;
   content: " ";
+  display: flex;
   position: absolute;
-  background-image: url(../icons/arrow_right.svg);
-  background-size: cover; background-position: center;
+  background-image: url(../icons/arrow_right_red.svg);
+  background-size: cover; 
+  background-position: center;
   width: 15px; height: 12px;
   transform: translateY(4px) translateX(215px);
 }

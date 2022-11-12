@@ -114,8 +114,10 @@ p.lead-text
 
 :not(p) .wp-block-button__link,
 #content :not(p) > a,
-footer a
+footer a,
+#dining_dashboard button
 {
+  display: flex;
 	width: fit-content;
 	height: fit-content;
 	padding: 8px 12px;
@@ -130,10 +132,12 @@ footer a
 	line-height: var(--height3);
 	text-transform: uppercase;
   transition: 0.2s;
+  cursor: pointer;
 }
 :not(p) .wp-block-button__link:hover,
 #content :not(p) > a:hover,
-footer a:hover
+footer a:hover,
+#dining_dashboard button:hover
 {
 	background-color: var(--red);
   color: var(--white);
