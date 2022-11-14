@@ -113,7 +113,8 @@ p.lead-text
 }
 
 :not(p) .wp-block-button__link,
-#content :not(p) > a,
+#content a:not(.location),
+#content :not(p) a:not(.location),
 footer a,
 #dining_dashboard button
 {
@@ -135,7 +136,7 @@ footer a,
   cursor: pointer;
 }
 :not(p) .wp-block-button__link:hover,
-#content :not(p) > a:hover,
+#content :not(p) > a:not(.location):hover,
 footer a:hover,
 #dining_dashboard button:hover
 {

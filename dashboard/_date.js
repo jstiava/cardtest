@@ -113,10 +113,10 @@ function adjust_day(day) {
 /**
  * Get today's date
  */
-var today = new Date();
-var day = adjust_day(today.getDay());
-var hour = adjust_hour(today.getHours());
-var min = today.getMinutes();
+let today = new Date();
+let day = adjust_day(today.getDay());
+let hour = adjust_hour(today.getHours());
+let min = today.getMinutes();
 
 
 

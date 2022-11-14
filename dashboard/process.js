@@ -113,7 +113,10 @@ function process_locations_helper(fetch_list, i) {
             new_node = new Market(
                 target.title.rendered,
                 target.acf.description,
-                target.acf.child_elements
+                target.acf.icon,
+                target.acf.icon_type,
+                target.acf.child_elements,
+                target.acf.primary_color
             );
             markets_hashmap.set(target.id, new_node);
             break;

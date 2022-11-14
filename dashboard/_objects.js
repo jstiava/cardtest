@@ -146,11 +146,17 @@ Region.prototype.hasChildren = function() {
     return true;
 }
 
-function Market(name, description, locations) {
+function Market(name, description, icon, icon_type, locations, primary_color) {
 
     this.rendered = false;
     this.name = name;
     this.description = description;
+
+    this.icon = icon;
+    this.icon_type = icon_type;
+    this.primary_color = primary_color;
+    this.secondary_color = get_contrast_color(primary_color);
+    
     this.children = locations;
 }
 Market.prototype.hasChildren = function() {
@@ -172,7 +178,7 @@ function Location(name, description, icon, icon_type, link, hours, menus, primar
     this.hoursToString = hours.replaceAll(';', '<br>');
     this.hours = processHours(hours);
     this.next = null;
-    this.current = this.hours[day].isOpen(hour);
+    this.current = this.hours[day].isOpen(hour + (min / 60));
 
     this.special = false;
     this.special_start = null;
@@ -201,7 +207,7 @@ Location.prototype.load_special_hours = function(start, end, hours) {
     this.special_hoursToString = hours.replaceAll(';', '<br>');
     this.special_hours = processHours(hours);
     this.special_next = null;
-    this.special_current = this.special_hours[day].isOpen(hour);
+    this.special_current = this.special_hours[day].isOpen(hour + (min / 60));
 }
 Location.prototype.load_tertiary_hours = function(start, end, hours) {
     this.tertiary = true;
@@ -210,7 +216,10 @@ Location.prototype.load_tertiary_hours = function(start, end, hours) {
     this.tertiary_hoursToString = hours.replaceAll(';', '<br>');
     this.tertiary_hours = processHours(hours);
     this.tertiary_next = null;
-    this.tertiary_current = this.tertiary_hours[day].isOpen(hour);
+    this.tertiary_current = this.tertiary_hours[day].isOpen(hour + (min / 60));
+}
+Location.prototype.update = function(day, hour, min) {
+    this.current = this.hours[day].isOpen(hour + (min / 60));
 }
 
 

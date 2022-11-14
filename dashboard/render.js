@@ -15,7 +15,53 @@ function get_contrast_color(hex) {
         return "#000000";
     }
     return "#ffffff";
+    
 }
+
+function render_title(location, block, content, force_text) {
+    if (force_text) {
+        var title = document.createElement('p');
+        title.innerHTML = location.name;
+        content.appendChild(title);
+        return;
+    }
+
+    if (location.icon_type == "circular") {
+        var img_icon = document.createElement('img');
+        img_icon.classList.add('circular');
+        fetch_and_render_image(location.icon, img_icon);
+        block.appendChild(img_icon);
+
+        var title = document.createElement('p');
+        title.innerHTML = location.name;
+        content.appendChild(title);
+        return;
+    }
+    
+    if (location.icon_type == "wordmark") {
+        var img_icon = document.createElement('img');
+        img_icon.classList.add('wordmark');
+        fetch_and_render_image(location.icon, img_icon);
+        content.appendChild(img_icon);
+        return;
+    }
+
+    var title = document.createElement('p');
+    title.innerHTML = location.name;
+    content.appendChild(title);
+    return;
+
+}
+
+function render_color_scheme(location, block) {
+    console.log(location);
+    if (location.primary_color != null && location.primary_color != "") {
+        block.classList.add('stylized');
+        block.style.background = location.primary_color;
+        block.style.color = location.secondary_color;
+    }
+}
+
 
 function render_locations(parent, children) {
 
@@ -29,50 +75,41 @@ function render_locations(parent, children) {
         var location = locations_hashmap.get(children[i]);
 
         // Build the renderable block
-        var block = document.createElement('div');
+        var block = document.createElement('a');
+        block.href = location.link;
         block.classList.add('location');
 
         var content = document.createElement('div');
         content.classList.add('content');
 
-        if (location.icon_type == "circular") {
-            var img_icon = document.createElement('img');
-            img_icon.classList.add('circular');
-            fetch_and_render_image(location.icon, img_icon);
-            block.appendChild(img_icon);
-
-            var title = document.createElement('p');
-            title.innerHTML = location.name;
-            content.appendChild(title);
-        }
-        else if (location.icon_type == "wordmark") {
-            var img_icon = document.createElement('img');
-            img_icon.classList.add('wordmark');
-            fetch_and_render_image(location.icon, img_icon);
-            content.appendChild(img_icon);
-        }
-        else {
-            var title = document.createElement('p');
-            title.innerHTML = location.name;
-            content.appendChild(title);
-        }
-
-        var link = document.createElement('a');
-        link.href = location.link;
-        link.innerHTML = "See More";
-        content.appendChild(link);
-
-        if (location.primary_color != null && location.primary_color != "") {
-            block.style.background = location.primary_color;
-            block.style.color = location.secondary_color;
-        }
-
         if (location.current) {
             block.classList.add('open');
+            block.style.order = 1;
+            render_title(location, block, content, false);
+            render_color_scheme(location, block);
+
+            if (typeof location.description != "undefined") {
+                var hours = document.createElement('p');
+                hours.innerHTML = location.description;
+                content.appendChild(hours);
+            }
         }
         else {
             block.classList.add('closed');
+            block.style.order = 3;
+            render_title(location, block, content, true);
         }
+
+        
+
+        
+        // var link = document.createElement('a');
+        // link.href = location.link;
+        // link.innerHTML = "See More";
+        // content.appendChild(link);
+
+
+        
 
         // Attach and submit to parent
         block.appendChild(content);
@@ -94,12 +131,27 @@ function render_markets(region, children) {
         var market = markets_hashmap.get(children[i]);
 
         if (market.hasChildren) {
-            var container = document.createElement('div');
-            container.classList.add('market');
+            var block = document.createElement('div');
+            block.classList.add('market');
 
-            render_locations(container, market.children);
+            var content = document.createElement('div');
+            content.classList.add('content');
 
-            region.appendChild(container);
+            render_title(market, block, content);
+            render_color_scheme(market, block);
+
+            // Render locations
+            render_locations(content, market.children);
+
+            var isAllClosed = content.querySelector('.open') == null;
+            if (isAllClosed) {
+                block.style.order = 3;
+            } else {
+                block.style.order = 2;
+            }
+
+            block.appendChild(content);
+            region.appendChild(block);
         }
 
     }
@@ -125,7 +177,9 @@ function render_region(region) {
         render_locations(container, region.children);
 
         root_block.appendChild(container);
+
     }
+
 }
 
 
@@ -136,73 +190,6 @@ function render() {
         render_region(region);
 
     }
-
-    // for (let target of locations_hashmap.values()) {
-
-    //     if (target.constructor.name == "Market") {
-
-    //     }
-
-    //     var new_location_block = document.createElement('div');
-    //     new_location_block.classList.add('location');
-
-    //     var content = document.createElement('div');
-    //     content.classList.add('content');
-
-    //     if (target.icon_type == "circular") {
-    //         var img_icon = document.createElement('img');
-    //         img_icon.classList.add('circular');
-    //         fetch_and_render_image(target.icon, img_icon);
-    //         new_location_block.appendChild(img_icon);
-
-    //         var p_title = document.createElement('p');
-    //         p_title.innerHTML = target.name;
-    //         content.appendChild(p_title);
-    //     }
-    //     else if (target.icon_type == "wordmark") {
-    //         var img_icon = document.createElement('img');
-    //         img_icon.classList.add('wordmark');
-    //         fetch_and_render_image(target.icon, img_icon);
-    //         content.appendChild(img_icon);
-    //     }
-    //     else {
-    //         var p_title = document.createElement('p');
-    //         p_title.innerHTML = target.name;
-    //         content.appendChild(p_title);
-    //     }
-
-    //     var p_hours = document.createElement('p');
-    //     p_hours.innerHTML = target.hoursToString;
-    //     content.appendChild(p_hours);
-
-    //     if (target.special) {
-    //         var p_special_hours = document.createElement('p');
-    //         p_special_hours.innerHTML = target.special_hoursToString;
-    //         content.appendChild(p_special_hours);
-    //     }
-
-    //     var a_link = document.createElement('a');
-    //     a_link.href = target.link;
-    //     a_link.innerHTML = "See More";
-    //     content.appendChild(a_link);
-
-    //     new_location_block.appendChild(content);
-
-    //     if (target.primary_color != null && target.primary_color != "") {
-    //         new_location_block.style.background = target.primary_color;
-    //         new_location_block.style.color = target.secondary_color;
-    //     }
-
-
-    //     if (target.current) {
-    //         new_location_block.classList.add('open');
-    //     }
-    //     else {
-    //         new_location_block.classList.add('closed');
-    //     }
-
-    //     root_block.appendChild(new_location_block);
-    // }
 
 }
 

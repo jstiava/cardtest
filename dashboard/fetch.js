@@ -36,8 +36,6 @@ function fetch_and_render_image(id, container) {
 
 function handle_and_render_image(data, container) {
     jsonData = JSON.parse(JSON.stringify(data));
-
-    console.log(jsonData);
     container.src = jsonData.guid.rendered;
 }
 
