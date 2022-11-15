@@ -1,3 +1,8 @@
+
+
+
+
+
 /*
 Theme Name: Card Site
 Theme URI: https://card.wustl.edu/
@@ -80,12 +85,12 @@ Tags: custom-header, custom-menu
   from {
     display: none;
     opacity: 0;
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(0.97);
   }
   to {
     display: flex;
     opacity: 1;
-    transform: translateY(0%);
+    transform: translateY(0%) scale(1);
   }
 }
 

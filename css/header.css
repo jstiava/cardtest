@@ -165,7 +165,8 @@ header .container {
 }
 .sub-menu
 {
-  position: absolute;
+  position:absolute;
+  z-index: 1000;
   padding: 0;
   width: 275px;
   /* border: 1px solid var(--grey-light); */

@@ -68,7 +68,9 @@ Template Name: Dining Test
                     
                 </div>
 
-                <div id="locationsList" class="col"></div>
+                <div id="dining_locations">
+                    
+                </div>
           </div>
      </div>
 </div>
