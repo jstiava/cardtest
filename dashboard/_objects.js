@@ -91,6 +91,43 @@ Hours.prototype.isOpen = function (hour) {
 }
 
 
+Date.prototype.equals = function(date) {
+    if (date == false) {
+        return false;
+    }
+
+    if (this.getDate == date.getDate) {
+        if (this.getMonth == date.getMonth) {
+            if (this.getFullYear == date.getFullYear) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+Date.prototype.after = function(date) {
+    if (date == false) {
+        return false;
+    }
+
+    if (this.getTime() >= date.getTime()) {
+        return true;
+    }
+
+    return false;
+}
+
+Date.prototype.before = function(date) {
+    if (this.getTime() < date.getTime()) {
+        return true;
+    }
+
+    return false;
+}
+
+
 /**
  * 
  */
@@ -182,16 +219,16 @@ function Location(name, description, icon, icon_type, link, hours, menus, primar
     this.current = this.hours[day].isOpen(hour + (min / 60));
 
     this.special = false;
-    this.special_start = null;
-    this.special_end = null;
+    this.special_start = false;
+    this.special_end = false;
     this.special_hoursToString = null;
     this.special_hours = null;
     this.special_current = null;
     this.special_next = null;
 
     this.tertiary = false;
-    this.tertiary_start = null;
-    this.tertiary_end = null;
+    this.tertiary_start = false;
+    this.tertiary_end = false;
     this.tertiary_hoursToString = null;
     this.tertiary_hours = null;
     this.tertiary_current = null;
@@ -203,8 +240,10 @@ function Location(name, description, icon, icon_type, link, hours, menus, primar
 }
 Location.prototype.load_special_hours = function(start, end, hours) {
     this.special = true;
-    this.special_start = start;
-    this.special_end = end;
+    this.special_start = new Date(start.slice(0, 4) + "-" + start.slice(4, 6) + "-" + (Number(start.slice(6, 8)) + 1));
+    this.special_start.setHours(0, 0, 0, 0);
+    this.special_end = new Date(end.slice(0, 4) + "-" + end.slice(4, 6) + "-" + (Number(end.slice(6, 8)) + 1));
+    this.special_end.setHours(0, 0, 0, 0);
     this.special_hoursToString = hours.replaceAll(';', '<br>');
     this.special_hours = processHours(hours);
     this.special_next = null;
@@ -212,8 +251,10 @@ Location.prototype.load_special_hours = function(start, end, hours) {
 }
 Location.prototype.load_tertiary_hours = function(start, end, hours) {
     this.tertiary = true;
-    this.tertiary_start = start;
-    this.tertiary_end = end;
+    this.tertiary_start = new Date(start.slice(0, 4) + "-" + start.slice(4, 6) + "-" + (Number(start.slice(6, 8)) + 1));
+    this.tertiary_start.setHours(0, 0, 0, 0);
+    this.tertiary_end = new Date(end.slice(0, 4) + "-" + end.slice(4, 6) + "-" + (Number(end.slice(6, 8)) + 1));
+    this.tertiary_end.setHours(0, 0, 0, 0);
     this.tertiary_hoursToString = hours.replaceAll(';', '<br>');
     this.tertiary_hours = processHours(hours);
     this.tertiary_next = null;
@@ -221,6 +262,8 @@ Location.prototype.load_tertiary_hours = function(start, end, hours) {
 }
 Location.prototype.update = function(day, hour, min) {
     this.current = this.hours[day].isOpen(hour + (min / 60));
+    this.special_current = this.hours[day].isOpen(hour + (min / 60));
+    this.tertiary_current = this.hours[day].isOpen(hour + (min / 60));
 }
 
 

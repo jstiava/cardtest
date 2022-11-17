@@ -1,3 +1,22 @@
+
+@keyframes pulsate {
+    0% {
+        opacity: 0;
+        /* transform: scale(0.7); */
+    }
+    50% {
+        opacity: 1;
+        /* transform: scale(1); */
+    }
+    100% {
+        opacity: 0;
+        /* transform: scale(0.7); */
+    }
+}
+
+
+
+
 #content {
 	display: flex;
 	flex-direction: column;
@@ -112,11 +131,15 @@
 }
 .title {
     font-size: 1.6em;
-    font-weight: 600;
+    font-weight: 600;console.
 }
 .market .location .title
 {
     font-size: 1.3em;
+}
+.market > .content > .title 
+{
+    margin-bottom: 25px;
 }
 
 img.wordmark
@@ -157,6 +180,7 @@ img.circular
 .location .controls a
 {
     background-color: #ffffff20 !important;
+    transition: 0.2s;
 }
 .region > .location:not(.stylized) .controls a {
     background-color: #00000020 !important;
@@ -165,12 +189,12 @@ img.circular
 
 .location.closed 
 {
-    opacity: 60%;
-    flex-direction: row;
+    opacity: 40%;
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
 }
-.location.closed > p
+.location.closed .content > p
 {
     font-size: 1em;
     font-weight: 600;
@@ -184,4 +208,107 @@ img.circular
     width: 60%;
     font-size: 1.2em;
     margin: 0;
+}
+
+.closed .content {
+    width: 100%;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    padding: 0 !important;
+}
+
+
+.region > *:not(.closed):not(.stylized)
+{
+    border: 2px solid #353535;
+}
+
+.stylized .buttons a.navigation
+{
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(https://card-test.wustl.edu/wp-content/uploads/2022/11/Group-2962.svg);
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.stylized .buttons a.grubhub
+{
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(http://card.local/wp-content/uploads/2022/11/Group-2967.svg);
+    height: 40px !important;
+    width: 100px !important;
+}
+
+.stylized .buttons a:hover
+{
+    background-color: #ffffff10 !important;
+    transition: 0.2s;
+}
+
+
+.region > *
+{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0);
+    transition: 0.2s ease-in-out;
+}
+.region > *:hover
+{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+    transition: 0.2s ease-in-out;
+}
+
+.stylized .controls > p
+{
+    display: flex;
+    align-items: center;
+}
+.stylized .controls > p::after
+{
+    display: flex;
+    content: "";
+    width: 10px;
+    height: 10px;
+    margin-left: 10px;
+    border-radius: 100vh;
+    
+    background-color: #ffffff;
+
+    animation-name: pulsate;
+    animation-duration: 3s;
+    animation-play-state: running;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+
+.grubhub {
+    display: none !important;
+}
+
+.special {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5rem;
+    display: flex;
+    font-size: 1rem;
+    background-color: #ffcc00;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+    color: #000 !important;
+    padding: 15px;
+    border-radius: 3px;
+    width: 100%;
+}
+.special::before
+{
+    content: "Special Hours";
+    position: relative;
+    font-size: 0.8rem;
+    letter-spacing: 0.01em;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding-bottom: 0.5em;
 }

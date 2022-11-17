@@ -1,4 +1,9 @@
 
+function start_fetch() {
+
+    fetch_locations(12);
+
+}
 
 
 
@@ -16,6 +21,31 @@ function handle_locations(data) {
     jsonData = JSON.parse(JSON.stringify(data));
 
     process_locations(jsonData);
+
+    fetch_events();
+
+    render();
+
+}
+
+
+
+
+
+function fetch_events() {
+    fetch("http://card.local/wp-json/wp/v2/calendar_event/", {
+        method: 'GET'
+    })
+    .then(response => response.json())
+    .then(data => handle_events(data))
+    .catch(error => console.error('Error:', error));
+}
+
+function handle_events(data) {
+    jsonData = JSON.parse(JSON.stringify(data));
+
+    process_events(jsonData);
+    
 }
 
 

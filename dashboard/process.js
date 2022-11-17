@@ -1,5 +1,7 @@
 
-
+const regions_hashmap = new Map();
+const markets_hashmap = new Map();
+const locations_hashmap = new Map();
 
 
 
@@ -78,20 +80,17 @@ function processHours(string) {
 }
 
 
-const regions_hashmap = new Map();
-const markets_hashmap = new Map();
-const locations_hashmap = new Map();
+
 
 function process_locations(fetch_list) {
 
-    process_locations_helper(fetch_list, 0);
+    return process_locations_helper(fetch_list, 0);
 
 }
 
 function process_locations_helper(fetch_list, i) {
 
     if (i >= fetch_list.length) {
-        render();
         return;
     }
 
@@ -151,5 +150,13 @@ function process_locations_helper(fetch_list, i) {
     }
 
     return process_locations_helper(fetch_list, i + 1)
+
+}
+
+
+
+function process_events(fetch_list) {
+
+    console.log(fetch_list);
 
 }
