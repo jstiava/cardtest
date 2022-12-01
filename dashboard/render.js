@@ -77,7 +77,12 @@ function render_header(location, object) {
     object.appendChild(the_header);
 }
 
-function render_controls(location, object) {
+
+
+
+
+
+function render_controls(location, object, type) {
 
     let the_status = document.createElement('p');
 
@@ -88,18 +93,41 @@ function render_controls(location, object) {
     var the_buttons = document.createElement('div');
     the_buttons.classList.add('buttons');
 
-    var the_navigation = document.createElement('a');
-    the_navigation.href = location.maps_link;
-    the_navigation.classList.add("navigation");
-    the_buttons.appendChild(the_navigation);
+        // Add navigation button
+        var the_navigation = document.createElement('a');
+        the_navigation.href = location.maps_link;
+        the_navigation.classList.add("navigation");
+        the_buttons.appendChild(the_navigation);
 
-    var the_grubhub = document.createElement('a');
-    the_grubhub.href = "https://www.grubhub.com/";
-    the_grubhub.classList.add("grubhub");
-    the_buttons.appendChild(the_grubhub);
+        // Add grubhub button
+        var the_grubhub = document.createElement('a');
+        the_grubhub.href = "https://www.grubhub.com/";
+        the_grubhub.classList.add("grubhub");
+        the_buttons.appendChild(the_grubhub);
+
+        // Add feedback button
+        var the_feedback = document.createElement('a');
+        the_feedback.href = "";
+        the_feedback.classList.add("feedback");
+        the_buttons.appendChild(the_feedback);
+
     the_controls.appendChild(the_buttons);
 
-    the_status.innerHTML = "OPEN";
+    if (type == "special") {
+        the_status.innerHTML = location.special_next;
+    }
+    else if (type == "tertiary") {
+        the_status.innerHTML = location.tertiary_next;
+    }
+    else {
+        if (location.next[1] == null) {
+            the_status.innerHTML = location.next[0];
+        }
+        else {
+            the_status.innerHTML = location.next[0] + ", " + location.next[1];
+        }
+        
+    }
     the_controls.appendChild(the_status);
 
     object.appendChild(the_controls);
@@ -113,7 +141,7 @@ function render_special(location, object) {
     object.appendChild(the_special_hours);
 }
 
-function render_closed(location, object) {
+function render_closed(location, object, type) {
     
     let the_status = document.createElement('p');
 
@@ -124,7 +152,20 @@ function render_closed(location, object) {
     the_content.classList.add('content');
     render_title(location, the_content, the_content, true);
 
-    the_status.innerHTML = "CLOSED";
+    if (type == "special") {
+        the_status.innerHTML = location.special_next;
+    }
+    else if (type == "tertiary") {
+        the_status.innerHTML = location.tertiary_next;
+    }
+    else {
+        if (location.next[1] == null) {
+            the_status.innerHTML = location.next[0];
+        }
+        else {
+            the_status.innerHTML = location.next[0] + ", " + location.next[1];
+        }
+    }
     the_content.appendChild(the_status);
 
     object.appendChild(the_content);
@@ -147,6 +188,7 @@ function render_locations(parent, children) {
         the_object.href = location.link;
         the_object.classList.add('location');
 
+
         if (location.tertiary && (today.after(location.tertiary_start) && today.before(location.tertiary_end))) {
             if (location.tertiary_current) {
                 the_object.classList.add('open');
@@ -154,10 +196,10 @@ function render_locations(parent, children) {
                 render_color_scheme(location, the_object);
                 render_header(location, the_object);
                 // render_events();
-                render_controls(location, the_object);
+                render_controls(location, the_object, "tertiary");
             }
             else {
-                render_closed(location, the_object);
+                render_closed(location, the_object, "tertiary");
             }
         }
         else if (location.special && (today.after(location.special_start) && today.before(location.special_end))) {
@@ -168,10 +210,10 @@ function render_locations(parent, children) {
                 render_header(location, the_object);
                 // render_events();
                 render_special(location, the_object, location.special_hoursToString);
-                render_controls(location, the_object);
+                render_controls(location, the_object, "special");
             }
             else {
-                render_closed(location, the_object);
+                render_closed(location, the_object, "special");
                 render_special(location, the_object, location.special_hoursToString);
             }
         }
@@ -181,10 +223,10 @@ function render_locations(parent, children) {
                 the_object.style.order = 1;
                 render_color_scheme(location, the_object);
                 render_header(location, the_object);
-                render_controls(location, the_object);
+                render_controls(location, the_object, "regular");
             }
             else {
-                render_closed(location, the_object);
+                render_closed(location, the_object, "regular");
             }
         }
 

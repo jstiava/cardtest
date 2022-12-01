@@ -60,8 +60,14 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 40px;
+    padding: 10px 0;
     height: fit-content;
+}
+.market > .content > .title {
+    padding: 30px 30px 10px 30px;
+}
+.market > .content > .wordmark {
+    margin: 30px 30px 10px 30px;
 }
 
 
@@ -69,12 +75,12 @@
 {
     display: flex;
     width: 100%;
-    padding: 30px;
+    padding: 40px;
     height: fit-content;
 }
 .market .location
 {
-    padding: 10px;
+    padding: 30px;
     margin-bottom: 25px;
 }
 .market {
@@ -131,7 +137,7 @@
 }
 .title {
     font-size: 1.6em;
-    font-weight: 600;console.
+    font-weight: 600;
 }
 .market .location .title
 {
@@ -142,8 +148,15 @@
     margin-bottom: 25px;
 }
 
+.content > p:nth-child(2)
+{
+    font-size: 1rem;
+}
+
 img.wordmark
 {
+    display: flex;
+    width: fit-content;
     max-height: 3em;
     margin-bottom: 1em;
     object-fit: contain;
@@ -169,6 +182,7 @@ img.circular
     margin-top: 1em;
 }
 .controls > p {
+    font-size: 1rem;
     font-weight: 600;
 }
 .location .controls a {
@@ -194,6 +208,16 @@ img.circular
     align-items: center;
     justify-content: space-between;
 }
+.location.closed {
+    background: repeating-linear-gradient(
+        45deg,
+        #00000030,
+        #00000030 10px,
+        #00000050 10px,
+        #00000050 20px
+    );
+    border: none !important;
+}
 .location.closed .content > p
 {
     font-size: 1em;
@@ -212,60 +236,148 @@ img.circular
 
 .closed .content {
     width: 100%;
+    align-items: center;
     flex-direction: row !important;
     justify-content: space-between !important;
     padding: 0 !important;
 }
 
 
-.region > *:not(.closed):not(.stylized)
+.region > :not(.closed):not(.stylized)
 {
-    border: 2px solid #353535;
+    border: 2px solid #bebebe;
 }
 
-.stylized .buttons a.navigation
-{
+.location .buttons {
+    opacity: 0;
+    transition: 0.3s ease-in-out;
+}
+.location:hover .buttons {
+    opacity: 1;
+    transition: 0.3s ease-in-out;
+}
+
+.buttons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px !important;
+    height: 40px !important;
     background-size: 40%;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url(https://card-test.wustl.edu/wp-content/uploads/2022/11/Group-2962.svg);
-    width: 40px !important;
-    height: 40px !important;
+    transition: 0.3s ease-in-out;
+    padding: 0 !important;
+    overflow: hidden;
 }
-
-.stylized .buttons a.grubhub
-{
-    background-size: 70%;
+.buttons a::before {
+    content: "";
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-size: 40%;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url(http://card.local/wp-content/uploads/2022/11/Group-2967.svg);
-    height: 40px !important;
-    width: 100px !important;
+    transition: 0.2s ease-in-out;
 }
 
-.stylized .buttons a:hover
+
+.buttons a.navigation::before {
+    background-image: url(../dashboard/icons/nav_black.svg);
+}
+.stylized .buttons a.navigation::before
 {
-    background-color: #ffffff10 !important;
+    background-image: url(../dashboard/icons/nav_white.svg);
+}
+.buttons a.navigation:hover::before
+{
+    transform: rotate(45deg) scale(1.1);
+    transition: 0.2s ease-in-out;
+}
+
+
+.buttons a.grubhub::before {
+    background-image: url(../dashboard/icons/gh_black.svg);
+}
+.stylized .buttons a.grubhub::before
+{
+    background-image: url(../dashboard/icons/gh_white.svg);
+}
+.buttons a.grubhub:hover::before
+{
+    transform: scale(1.1);
+    transition: 0.2s ease-in-out;
+}
+
+
+.buttons a.feedback::before {
+    background-image: url(../dashboard/icons/fb_black.svg);
+}
+.stylized .buttons a.feedback::before
+{
+    background-image: url(../dashboard/icons/fb_white.svg);
+}
+.buttons a.feedback:hover::before
+{
+    transform: scale(1.1);
+    transition: 0.2s ease-in-out;
+}
+
+
+
+
+
+
+
+
+.region .location .controls .buttons a
+{
+    background-color: #00000020 !important;
+    transition: 0.2s;
+}
+.region .location .controls .buttons a:hover
+{
+    background-color: #00000010 !important;
     transition: 0.2s;
 }
 
 
-.region > *
-{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0);
-    transition: 0.2s ease-in-out;
+.market > .content {
+    background-color: inherit !important;
 }
-.region > *:hover
-{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
-    transition: 0.2s ease-in-out;
+.market > .content > .location {
+    background-color: inherit !important;
 }
 
-.stylized .controls > p
+.region > .location,
+.market > .content > .location
+{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0);
+    transition: 0.3s ease-in-out;
+    transform: scale(1);
+}
+.region > .location:hover,
+.market > .content > .location:hover
+{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+    transition: 0.3s ease-in-out;
+}
+
+
+.region > .location.open:hover {
+    transform: scale(1.04);
+}
+.market > .content > .location.open:hover {
+    transform: scale(1.04);
+}
+
+.location .controls > p
 {
     display: flex;
     align-items: center;
+    text-align: right;
 }
+/* .region > .location.stylized .controls > p::after,
 .stylized .controls > p::after
 {
     display: flex;
@@ -282,12 +394,32 @@ img.circular
     animation-play-state: running;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
+} */
+
+/* .region > .location:not(.stylized) .controls > p::after,
+.market:not(.stylized) .controls > p::after
+{
+    display: flex;
+    content: "";
+    width: 10px;
+    height: 10px;
+    margin-left: 10px;
+    border-radius: 100vh;
+    
+    background-color: #353535;
+
+    animation-name: pulsate;
+    animation-duration: 3s;
+    animation-play-state: running;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+} */
+
+.market:not(.stylized) {
+    background-color: #ffffff;
 }
 
 
-.grubhub {
-    display: none !important;
-}
 
 .special {
     display: flex;
@@ -296,7 +428,7 @@ img.circular
     display: flex;
     font-size: 1rem;
     background-color: #ffcc00;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
     color: #000 !important;
     padding: 15px;
     border-radius: 3px;
@@ -311,4 +443,30 @@ img.circular
     font-weight: 800;
     text-transform: uppercase;
     padding-bottom: 0.5em;
+}
+
+.closed .content p:nth-child(2) {
+    text-align: right;
+}
+
+.market .closed:not(:last-child) {
+    margin-bottom: 5px !important;
+}
+.market .closed:last-child {
+    margin-bottom: 0px !important;
+}
+
+
+.market > .content {
+    display: flex;
+    flex-direction: column;
+}
+.market .location {
+    background-color: #00000000;
+    border-radius: 5px;
+    transition: 0.2s;
+}
+.market .location:hover {
+    background-color: #00000005;
+    transition: 0.2s;
 }

@@ -32,7 +32,14 @@ function unadjust_hour(hour) {
         hour = hour - 12;
         type = "pm";
     }
-    return [hour, type];
+
+    var min = hour % 1;
+    hour = hour - min;
+    min = min * 60;
+    if (min == 0) {
+        return hour + type;
+    }
+    return hour + ":" + min + type;
 }
 function hour_to_12(hour) {
     if (hour > 12) {

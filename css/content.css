@@ -123,7 +123,7 @@ footer a,
 	height: fit-content;
 	padding: 8px 12px;
 	background-color: var(--white);
-  color: var(--red);
+  color: var(--red) !important;
   border: 4px solid var(--red);
 	text-decoration: none;
 	font-family: var(--sans);
@@ -141,7 +141,7 @@ footer a:hover,
 #dining_dashboard button:hover
 {
 	background-color: var(--red);
-  color: var(--white);
+  color: var(--white) !important;
   transition: 0.2s;
 
 }

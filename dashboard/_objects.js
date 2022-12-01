@@ -90,6 +90,50 @@ Hours.prototype.isOpen = function (hour) {
     return false;
 }
 
+Hours.prototype.next = function (hour) {
+    if (this.min == null) {
+        return ["Closed", null];
+    }
+
+    var diff = hour - this.min;
+    var isClosed = diff <= 0;
+    var diff = Math.abs(diff);
+
+    if (isClosed) {
+        if (diff < 1) {
+            return ["Closed", "Opens at " + unadjust_hour(this.min)];
+        }
+        return ["Closed", null];
+    }
+
+    var status = true;
+    for (var i = 0; i < this.breaks.length; i++) {
+
+        if (hour < this.breaks[i]) {
+
+            if (status) {
+                return ["Open", "Taking a break at " + unadjust_hour(this.breaks[i])];
+            }
+
+            return ["Closed", "Back open at " + unadjust_hour(this.breaks[i])];
+        }
+        status = !status;
+    }
+
+    diff = hour - this.max;
+    isClosed = diff >= 0;
+    diff = Math.abs(diff);
+
+    if (!isClosed) {
+        if (diff < 1) {
+            return ["Open", "Closing at " + unadjust_hour(this.max)];
+        }
+        return ["Open", null];
+    }
+
+    return ["Closed", null];
+}
+
 
 Date.prototype.equals = function(date) {
     if (date == false) {
@@ -170,7 +214,6 @@ Schedule.prototype.isOpen = function(day, hour, min) {
 
 
 
-
 function Region(name, locations) {
 
     this.rendered = false;
@@ -215,7 +258,7 @@ function Location(name, description, icon, icon_type, link, hours, menus, primar
 
     this.hoursToString = hours.replaceAll(';', '<br>');
     this.hours = processHours(hours);
-    this.next = null;
+    this.next = this.hours[day].next(hour + (min / 60));
     this.current = this.hours[day].isOpen(hour + (min / 60));
 
     this.special = false;
@@ -246,7 +289,7 @@ Location.prototype.load_special_hours = function(start, end, hours) {
     this.special_end.setHours(0, 0, 0, 0);
     this.special_hoursToString = hours.replaceAll(';', '<br>');
     this.special_hours = processHours(hours);
-    this.special_next = null;
+    this.special_next = this.special_hours[day].next(hour + (min / 60));
     this.special_current = this.special_hours[day].isOpen(hour + (min / 60));
 }
 Location.prototype.load_tertiary_hours = function(start, end, hours) {
@@ -257,13 +300,18 @@ Location.prototype.load_tertiary_hours = function(start, end, hours) {
     this.tertiary_end.setHours(0, 0, 0, 0);
     this.tertiary_hoursToString = hours.replaceAll(';', '<br>');
     this.tertiary_hours = processHours(hours);
-    this.tertiary_next = null;
+    this.tertiary_next = this.tertiary_hours[day].next(hour + (min / 60));
     this.tertiary_current = this.tertiary_hours[day].isOpen(hour + (min / 60));
 }
 Location.prototype.update = function(day, hour, min) {
     this.current = this.hours[day].isOpen(hour + (min / 60));
+    this.next = this.hours[day].next(hour + (min / 60));
+
     this.special_current = this.hours[day].isOpen(hour + (min / 60));
+    // this.special_next = this.special_hours[day].next(hour + (min / 60));
+
     this.tertiary_current = this.hours[day].isOpen(hour + (min / 60));
+    // this.tertiary_next = this.tertiary_hours[day].next(hour + (min / 60));
 }
 
 

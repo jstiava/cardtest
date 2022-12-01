@@ -7,6 +7,7 @@ const locations_hashmap = new Map();
 
 // Process a day of hours
 function preProcessHoursRegex(string) {
+
     var object = new Hours();
 
     var keyValues = [4, 11, 18];
@@ -153,10 +154,6 @@ function process_locations_helper(fetch_list, i) {
 
 }
 
-
-
 function process_events(fetch_list) {
-
     console.log(fetch_list);
-
 }
