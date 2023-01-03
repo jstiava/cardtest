@@ -123,7 +123,7 @@ footer a,
 	height: fit-content;
 	padding: 8px 12px;
 	background-color: var(--white);
-  color: var(--red) !important;
+  color: var(--red);
   border: 4px solid var(--red);
 	text-decoration: none;
 	font-family: var(--sans);
@@ -141,7 +141,7 @@ footer a:hover,
 #dining_dashboard button:hover
 {
 	background-color: var(--red);
-  color: var(--white) !important;
+  color: var(--white);
   transition: 0.2s;
 
 }
@@ -300,6 +300,7 @@ article.merchants {
   border-radius: 5px;
   overflow: hidden;
   border-bottom: 5px solid var(--red-light);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 .wp-block-washu-card:not(.washu-card__style-text-header) {
   flex-direction: row;
@@ -326,6 +327,10 @@ img
   flex-direction: column;
   width: 55%;
   padding: 40px 0;
+}
+.wp-block-washu-card:not(.washu-card__style-text-header) 
+.washu-card__grouping:last-child {
+  display: none !important;
 }
 .wp-block-washu-card figure {
   width: 100%;
@@ -359,14 +364,16 @@ img
 /* Color themes of WashU Blocks */
 .wp-block-washu-card:not(.washu-card__style-text-header) .wp-block-button a {
   background-color: var(--white) !important;
-  border-color: var(--white) !important;
+  border-color: var(--red) !important;
+  color: var(--red) !important;
 }
 .wp-block-washu-card:not(.washu-card__style-text-header) .wp-block-button a:hover {
-  background-color: transparent !important;
-  border-color: var(--white) !important;
+  background-color: var(--red) !important;
+  color: var(--white) !important;
 }
 .wp-block-washu-card:not(.washu-card__style-text-header):is(.red, .blue) .wp-block-button a {
   color: var(--white) !important;
+  border-color: var(--white) !important;
   background: transparent !important;
 }
 .wp-block-washu-card:not(.washu-card__style-text-header):is(.red, .blue) .wp-block-button a:hover{
@@ -388,6 +395,9 @@ If the block theme is red, style the background red.
   border-color: var(--red);
 }
 .wp-block-washu-card:not(.washu-card__style-text-header).red .wp-block-button a:hover{
+  color: var(--white) !important;
+}
+.wp-block-washu-card:not(.washu-card__style-text-header).red .wp-block-button a:hover{
   color: var(--red) !important;
 }
 
@@ -397,6 +407,9 @@ If the block theme is blue, style the background red.
 .wp-block-washu-card:not(.washu-card__style-text-header).blue {
   background-color: var(--blue-dark);
   border-color: var(--blue-dark);
+}
+.wp-block-washu-card:not(.washu-card__style-text-header).blue .wp-block-button a:hover{
+  color: var(--white) !important;
 }
 .wp-block-washu-card:not(.washu-card__style-text-header).blue .wp-block-button a:hover{
   color: var(--blue-dark) !important;

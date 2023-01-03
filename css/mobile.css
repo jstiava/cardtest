@@ -208,10 +208,17 @@
      }
 
      /* Page Content */
+     .wrapper {
+          padding: 0 15px;
+     }
+     #content {
+          width: 100%;
+          padding: 0 !important;
+     }
      #content .container
      {
           width: 100% !important;
-          padding: 15vw 10vw !important;
+          padding: 15px !important;
           border: none !important;
      }
 
@@ -221,6 +228,17 @@
 
      footer {
           padding: 10vh 10vw calc(10vh + 40px) 10vw !important;
+     }
+
+     /* WashU Blocks */
+     .wp-block-washu-card
+     {
+          flex-direction: column !important;
+     }
+     .wp-block-washu-card:not(.washu-card__style-text-header) .washu-card__image,
+     .washu-card__grouping
+     {
+          width: 100% !important;
      }
 }
 
@@ -239,4 +257,10 @@
      .sidebar.front-page {
           padding: 15vw 10vw;
      }
+
+     #content .container
+     {
+          padding: 0 !important;
+     }
+
 }

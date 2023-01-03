@@ -227,7 +227,7 @@ Region.prototype.hasChildren = function() {
     return true;
 }
 
-function Market(name, description, icon, icon_type, locations, primary_color) {
+function Market(name, description, icon, icon_type, latitude, longitude, locations, primary_color) {
 
     this.rendered = false;
     this.name = name;
@@ -235,10 +235,15 @@ function Market(name, description, icon, icon_type, locations, primary_color) {
 
     this.icon = icon;
     this.icon_type = icon_type;
+    this.coords = [latitude, longitude];
+    this.proximity = this.getProximity();
+    
     this.primary_color = primary_color;
     this.secondary_color = get_contrast_color(primary_color);
     
     this.children = locations;
+
+    this.priority = this.getPriority();
 }
 Market.prototype.hasChildren = function() {
     if (typeof this.children == "undefined" || this.children == null || this.children == "" || this.children == []) {
@@ -246,8 +251,24 @@ Market.prototype.hasChildren = function() {
     }
     return true;
 }
+Market.prototype.getProximity = function() {
+    if (this.coords[0] == null) {
+        return null;
+    }
+    if (this.coords[1] == null) {
+        return null;
+    }
+    return Math.sqrt( Math.pow(current_latitude - this.coords[0], 2) + Math.pow(current_longitude - this.coords[1], 2) );
+}
+Market.prototype.getPriority = function() {
+    value = 0;
 
-function Location(name, description, icon, icon_type, link, hours, menus, primary_color) {
+    value = value + this.proximity;
+
+    return value;
+}
+
+function Location(name, description, icon, icon_type, link, latitude, longitude, hours, menus, primary_color) {
 
     this.rendered = false;
     this.name = name;
@@ -280,7 +301,39 @@ function Location(name, description, icon, icon_type, link, hours, menus, primar
     this.primary_color = primary_color;
     this.secondary_color = get_contrast_color(primary_color);
     this.children = menus;
+
+    
+    this.coords = [latitude, longitude];
+    this.proximity = this.getProximity();
+
+    this.priority = this.getPriority();
 }
+Location.prototype.getProximity = function() {
+    if (this.coords[0] == null || this.coords[0] == "") {
+        return null;
+    }
+    if (this.coords[1] == null || this.coords[1] == "") {
+        return null;
+    }
+
+    return Math.sqrt( Math.pow(current_latitude - this.coords[0], 2) + Math.pow(current_longitude - this.coords[1], 2) );
+}
+Location.prototype.getPriority = function() {
+    value = 0;
+
+    value = value + this.proximity;
+
+    if (!this.current) {
+        value = value + 10000;
+    }
+
+    return value;
+}
+
+
+
+
+
 Location.prototype.load_special_hours = function(start, end, hours) {
     this.special = true;
     this.special_start = new Date(start.slice(0, 4) + "-" + start.slice(4, 6) + "-" + (Number(start.slice(6, 8)) + 1));

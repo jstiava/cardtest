@@ -1,13 +1,14 @@
-
 @keyframes pulsate {
     0% {
         opacity: 0;
         /* transform: scale(0.7); */
     }
+
     50% {
         opacity: 1;
         /* transform: scale(1); */
     }
+
     100% {
         opacity: 0;
         /* transform: scale(0.7); */
@@ -18,13 +19,12 @@
 
 
 #content {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
-#dining_dashboard
-{
+#dining_dashboard {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -32,68 +32,84 @@
 }
 
 
-#dining_locations
-{
+#dining_locations {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /* justify-content: space-between; */
     width: 100%;
     height: fit-content;
     margin-top: 3em;
 }
 
+#dining_locations>* {
+    width: 100%;
+    /* max-width: 500px; */
+    margin-bottom: 30px;
+}
 
-.region
-{
+
+.region {
     display: flex;
     flex-direction: column;
     width: 23.5%;
     height: fit-content;
 }
-.region > .market,
-.region > .location 
-{
+
+.region>.market,
+.region>.location {
     border-radius: 5px;
 }
 
-.market
-{
+.market {
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 10px 0;
+    padding: 10px 0 0 0;
     height: fit-content;
+    border-radius: 5px;
 }
-.market > .content > .title {
+
+.market>.content>.title {
     padding: 30px 30px 10px 30px;
 }
-.market > .content > .wordmark {
+
+.market>.content>.wordmark {
     margin: 30px 30px 10px 30px;
 }
 
 
-.location
-{
+.location {
     display: flex;
+    flex-direction: column;
     width: 100%;
     padding: 40px;
     height: fit-content;
+    border-radius: 5px;
 }
-.market .location
-{
-    padding: 30px;
+
+.market .location {
+    padding: 40px;
     margin-bottom: 25px;
 }
-.market {
-    padding-bottom: 15px;
-}
-.region > * {
+
+.region>* {
     margin-bottom: 40px;
 }
 
-.location .header,
+.location .header {
+    justify-content: space-between;
+    width: 100%;
+}
+
+.location .header .content {
+    /* width: calc(100% - 100px); */
+    width: 100%;
+}
+
+.location .header .location .header,
 .location .content,
-.location .buttons
-{
+.location .buttons {
     display: flex;
     width: fit-content;
     height: fit-content;
@@ -101,77 +117,88 @@
 }
 
 
-.region
-.location,
-.location .content 
-{
+.region .location,
+.location .content {
     flex-direction: column;
+    align-items: flex-start;
+}
+
+.location .content p:nth-child(2) {
+    opacity: 0.5;
+    transition: 0.2s ease-in-out;
+
+}
+
+.location:hover .content p:nth-child(2) {
+    opacity: 1;
+    transition: 0.2s ease-in-out;
 }
 
 
 .location:link,
 .location:visited,
 .location:hover,
-.location:active
-{
+.location:active {
     color: unset;
     text-decoration: unset;
 }
+
 .location:link *,
 .location:visited *,
 .location:hover *,
-.location:active *
-{
+.location:active * {
     color: inherit;
 }
 
-.market *
-{
+.market * {
     color: inherit;
 }
 
 
-.location .content 
-{
+.location .content {
     margin-bottom: 0.5em;
 }
+
 .title {
     font-size: 1.6em;
     font-weight: 600;
 }
-.market .location .title
-{
+
+.market .location .title {
     font-size: 1.3em;
 }
-.market > .content > .title 
-{
+
+.market>.content>.title {
     margin-bottom: 25px;
 }
 
-.content > p:nth-child(2)
-{
+.content>p:nth-child(2) {
     font-size: 1rem;
 }
 
-img.wordmark
-{
+img.wordmark {
     display: flex;
-    width: fit-content;
+    width: auto;
     max-height: 3em;
     margin-bottom: 1em;
     object-fit: contain;
 }
-img.circular
-{
-    max-height: 6em;
+
+img.circular {
+    max-height: 3.5em;
     margin-right: 1em;
     object-fit: contain;
+    padding: 0 !important;
 }
-.market .location img.circular
-{
+
+.market .location img.circular {
     max-height: 4.5em;
 }
 
+.loc_wrapper {
+    display: flex;
+    width: 100%;
+}
 
 
 .controls {
@@ -181,54 +208,62 @@ img.circular
     width: 100%;
     margin-top: 1em;
 }
-.controls > p {
+
+.controls>p {
     font-size: 1rem;
     font-weight: 600;
 }
+
 .location .controls a {
     border: none !important;
     border-radius: 5px;
     margin-right: 10px;
     height: 1em;
 }
-.location .controls a
-{
+
+.location .controls a {
     background-color: #ffffff20 !important;
     transition: 0.2s;
 }
-.region > .location:not(.stylized) .controls a {
+
+.region>.location:not(.stylized) .controls a {
     background-color: #00000020 !important;
 }
 
 
-.location.closed 
-{
+.location.closed {
     opacity: 40%;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    
 }
+.market .location.closed {
+    order: 1 !important;
+}
+.market .location.open {
+    order: 0 !important;
+}
+
 .location.closed {
-    background: repeating-linear-gradient(
-        45deg,
-        #00000030,
-        #00000030 10px,
-        #00000050 10px,
-        #00000050 20px
-    );
+    background: repeating-linear-gradient(45deg,
+            #00000030,
+            #00000030 10px,
+            #00000050 10px,
+            #00000050 20px);
     border: none !important;
 }
-.location.closed .content > p
-{
+
+.location.closed .content>p {
     font-size: 1em;
     font-weight: 600;
 }
-.region > .location.closed
-{
+
+.region>.location.closed {
     border: 2px solid #000000;
 }
-.location.closed .title 
-{
+
+.location.closed .title {
     width: 60%;
     font-size: 1.2em;
     margin: 0;
@@ -243,15 +278,15 @@ img.circular
 }
 
 
-.region > :not(.closed):not(.stylized)
-{
+.region> :not(.closed):not(.stylized) {
     border: 2px solid #bebebe;
 }
 
 .location .buttons {
-    opacity: 0;
+    opacity: 0.1;
     transition: 0.3s ease-in-out;
 }
+
 .location:hover .buttons {
     opacity: 1;
     transition: 0.3s ease-in-out;
@@ -261,8 +296,8 @@ img.circular
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px !important;
-    height: 40px !important;
+    width: 45px !important;
+    height: 45px !important;
     background-size: 40%;
     background-repeat: no-repeat;
     background-position: center;
@@ -270,6 +305,7 @@ img.circular
     padding: 0 !important;
     overflow: hidden;
 }
+
 .buttons a::before {
     content: "";
     position: relative;
@@ -285,12 +321,12 @@ img.circular
 .buttons a.navigation::before {
     background-image: url(../dashboard/icons/nav_black.svg);
 }
-.stylized .buttons a.navigation::before
-{
+
+.stylized .buttons a.navigation::before {
     background-image: url(../dashboard/icons/nav_white.svg);
 }
-.buttons a.navigation:hover::before
-{
+
+.buttons a.navigation:hover::before {
     transform: rotate(45deg) scale(1.1);
     transition: 0.2s ease-in-out;
 }
@@ -299,12 +335,12 @@ img.circular
 .buttons a.grubhub::before {
     background-image: url(../dashboard/icons/gh_black.svg);
 }
-.stylized .buttons a.grubhub::before
-{
+
+.stylized .buttons a.grubhub::before {
     background-image: url(../dashboard/icons/gh_white.svg);
 }
-.buttons a.grubhub:hover::before
-{
+
+.buttons a.grubhub:hover::before {
     transform: scale(1.1);
     transition: 0.2s ease-in-out;
 }
@@ -313,12 +349,12 @@ img.circular
 .buttons a.feedback::before {
     background-image: url(../dashboard/icons/fb_black.svg);
 }
-.stylized .buttons a.feedback::before
-{
+
+.stylized .buttons a.feedback::before {
     background-image: url(../dashboard/icons/fb_white.svg);
 }
-.buttons a.feedback:hover::before
-{
+
+.buttons a.feedback:hover::before {
     transform: scale(1.1);
     transition: 0.2s ease-in-out;
 }
@@ -330,53 +366,53 @@ img.circular
 
 
 
-.region .location .controls .buttons a
-{
+.region .location .controls .buttons a {
     background-color: #00000020 !important;
     transition: 0.2s;
 }
-.region .location .controls .buttons a:hover
-{
+
+.region .location .controls .buttons a:hover {
     background-color: #00000010 !important;
     transition: 0.2s;
 }
 
 
-.market > .content {
-    background-color: inherit !important;
-}
-.market > .content > .location {
+.market>.content {
     background-color: inherit !important;
 }
 
-.region > .location,
-.market > .content > .location
-{
+.market>.content>.location {
+    background-color: inherit !important;
+}
+
+.location,
+.market>.content>.location {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0);
     transition: 0.3s ease-in-out;
     transform: scale(1);
 }
-.region > .location:hover,
-.market > .content > .location:hover
-{
+
+.location:hover,
+.market>.content>.location:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
     transition: 0.3s ease-in-out;
 }
 
 
-.region > .location.open:hover {
-    transform: scale(1.04);
-}
-.market > .content > .location.open:hover {
+.location.open:hover {
     transform: scale(1.04);
 }
 
-.location .controls > p
-{
+.content>.location.open:hover {
+    transform: scale(1.04);
+}
+
+.location .controls>p {
     display: flex;
     align-items: center;
     text-align: right;
 }
+
 /* .region > .location.stylized .controls > p::after,
 .stylized .controls > p::after
 {
@@ -434,8 +470,8 @@ img.circular
     border-radius: 3px;
     width: 100%;
 }
-.special::before
-{
+
+.special::before {
     content: "Special Hours";
     position: relative;
     font-size: 0.8rem;
@@ -449,24 +485,33 @@ img.circular
     text-align: right;
 }
 
+.market .closed {
+    border-radius: 5px;
+}
+
 .market .closed:not(:last-child) {
     margin-bottom: 5px !important;
 }
+
 .market .closed:last-child {
     margin-bottom: 0px !important;
 }
 
 
-.market > .content {
+.market>.content {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
 }
+
 .market .location {
     background-color: #00000000;
     border-radius: 5px;
     transition: 0.2s;
 }
+
 .market .location:hover {
     background-color: #00000005;
     transition: 0.2s;
 }
+

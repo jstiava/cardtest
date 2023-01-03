@@ -1,7 +1,7 @@
 let datetime = document.getElementById('datetime');
 let update_button = document.getElementById('update_dashboard');
 
-function update_hours() {
+function hard_reload() {
     
     today = new Date(datetime.value);
     let day = adjust_day(today.getDay());
@@ -18,10 +18,18 @@ function update_hours() {
 
 }
 
+function reload() {
+
+    clear();
+
+    render();
+
+}
+
 function clear() {
     while (root_block.firstChild) {
         root_block.removeChild(root_block.lastChild);
     }
 }
 
-update_button.addEventListener("click", update_hours)
+// update_button.addEventListener("click", update_hours);

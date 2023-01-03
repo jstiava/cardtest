@@ -25,17 +25,48 @@ function get_contrast_color(hex) {
 
 function render_title(location, block, content, force_text) {
 
-    if (location.icon_type == "circular" & !force_text) {
+    if (location.icon_type == "circular" && !force_text) {
         var img_icon = document.createElement('img');
         img_icon.classList.add('circular');
         fetch_and_render_image(location.icon, img_icon);
-        block.appendChild(img_icon);
+
+        var the_wrapper = document.createElement('div');
+        the_wrapper.classList.add('loc_wrapper');
+        the_wrapper.appendChild(img_icon);
+
+        var title = document.createElement('p');
+        title.classList.add('title');
+        title.innerHTML = location.name;
+
+        content.appendChild(title);
+
+        // The content
+        if (typeof location.description != "undefined") {
+            var the_description = document.createElement('p');
+            the_description.innerHTML = location.description;
+            content.appendChild(the_description);
+        }
+
+        the_wrapper.appendChild(content);
+        block.appendChild(the_wrapper);
+
+        return;
     }
-    if (location.icon_type == "wordmark" & !force_text) {
+
+    if (location.icon_type == "wordmark" && !force_text) {
         var img_icon = document.createElement('img');
         img_icon.classList.add('wordmark');
         fetch_and_render_image(location.icon, img_icon);
         content.appendChild(img_icon);
+
+        // The content
+        if (typeof location.description != "undefined") {
+            var the_description = document.createElement('p');
+            the_description.innerHTML = location.description;
+            content.appendChild(the_description);
+        }
+
+        block.appendChild(content);
         return;
     }
 
@@ -43,6 +74,15 @@ function render_title(location, block, content, force_text) {
     title.classList.add('title');
     title.innerHTML = location.name;
     content.appendChild(title);
+
+    // The content
+    if (typeof location.description != "undefined") {
+        var the_description = document.createElement('p');
+        the_description.innerHTML = location.description;
+        content.appendChild(the_description);
+    }
+
+    block.appendChild(content);
     return;
 
 }
@@ -57,23 +97,18 @@ function render_color_scheme(location, block) {
 }
 
 function render_header(location, object) {
+
+    
+    // The header
+    var the_header = document.createElement('div');
+    the_header.classList.add('header');
+
     // The content
     var the_content = document.createElement('div');
     the_content.classList.add('content');
 
-    // The header
-    var the_header = document.createElement('div');
-    the_header.classList.add('header');
     render_title(location, the_header, the_content, false);
 
-
-    // The content
-    if (typeof location.description != "undefined") {
-        var the_description = document.createElement('p');
-        the_description.innerHTML = location.description;
-        the_content.appendChild(the_description);
-    }
-    the_header.appendChild(the_content);
     object.appendChild(the_header);
 }
 
@@ -81,10 +116,33 @@ function render_header(location, object) {
 
 
 
+function render_hours(location, object) {
+    let the_status = document.createElement('p');
+
+    if (type == "special") {
+        the_status.innerHTML = location.special_next;
+    }
+    else if (type == "tertiary") {
+        the_status.innerHTML = location.tertiary_next;
+    }
+    else {
+        if (location.next[1] == null) {
+            the_status.innerHTML = location.next[0];
+        }
+        else {
+            the_status.innerHTML = location.next[0] + ", " + location.next[1];
+        }
+        
+    }
+
+    object.appendChild(the_status);
+}
+
 
 function render_controls(location, object, type) {
 
-    let the_status = document.createElement('p');
+    var the_hours = document.createElement('a');
+    the_hours.classList.add('hours');
 
     // The controls
     var the_controls = document.createElement('div');
@@ -113,22 +171,15 @@ function render_controls(location, object, type) {
 
     the_controls.appendChild(the_buttons);
 
-    if (type == "special") {
-        the_status.innerHTML = location.special_next;
-    }
-    else if (type == "tertiary") {
-        the_status.innerHTML = location.tertiary_next;
-    }
-    else {
-        if (location.next[1] == null) {
-            the_status.innerHTML = location.next[0];
-        }
-        else {
-            the_status.innerHTML = location.next[0] + ", " + location.next[1];
-        }
-        
-    }
-    the_controls.appendChild(the_status);
+    the_current = document.createElement('p');
+    the_current.innerHTML = location.next[0];
+    the_hours.appendChild(the_current);
+    
+    the_current_sub = document.createElement('p');
+    the_current_sub.innerHTML = location.next[1];
+    the_hours.appendChild(the_current_sub);
+
+    the_controls.appendChild(the_hours);
 
     object.appendChild(the_controls);
 }
@@ -146,11 +197,14 @@ function render_closed(location, object, type) {
     let the_status = document.createElement('p');
 
     object.classList.add('closed');
-    object.style.order = 3;
 
     var the_content = document.createElement('div');
     the_content.classList.add('content');
-    render_title(location, the_content, the_content, true);
+    
+    var title = document.createElement('p');
+    title.classList.add('title');
+    title.innerHTML = location.name;
+    the_content.appendChild(title);
 
     if (type == "special") {
         the_status.innerHTML = location.special_next;
@@ -172,9 +226,14 @@ function render_closed(location, object, type) {
 }
 
 
-function render_locations(parent, children) {
+function render_locations(parent, children, market) {
+    
 
     for (var i = 0; i < children.length; i++) {
+
+        if (!market && rendered_elements.includes(children[i])) {
+            continue;
+        }
 
         if (!(locations_hashmap.has(children[i]))) {
             continue;
@@ -192,7 +251,6 @@ function render_locations(parent, children) {
         if (location.tertiary && (today.after(location.tertiary_start) && today.before(location.tertiary_end))) {
             if (location.tertiary_current) {
                 the_object.classList.add('open');
-                the_object.style.order = 1;
                 render_color_scheme(location, the_object);
                 render_header(location, the_object);
                 // render_events();
@@ -205,7 +263,6 @@ function render_locations(parent, children) {
         else if (location.special && (today.after(location.special_start) && today.before(location.special_end))) {
             if (location.special_current) {
                 the_object.classList.add('open');
-                the_object.style.order = 1;
                 render_color_scheme(location, the_object);
                 render_header(location, the_object);
                 // render_events();
@@ -220,7 +277,6 @@ function render_locations(parent, children) {
         else {
             if (location.current) {
                 the_object.classList.add('open');
-                the_object.style.order = 1;
                 render_color_scheme(location, the_object);
                 render_header(location, the_object);
                 render_controls(location, the_object, "regular");
@@ -249,6 +305,7 @@ function render_markets(region, children) {
         var market = markets_hashmap.get(children[i]);
 
         if (market.hasChildren) {
+
             var block = document.createElement('div');
             block.classList.add('market');
 
@@ -259,16 +316,16 @@ function render_markets(region, children) {
             render_color_scheme(market, block);
 
             // Render locations
-            render_locations(content, market.children);
+            render_locations(content, market.children, true);
 
             var isAllClosed = content.querySelector('.open') == null;
             if (isAllClosed) {
-                block.style.order = 3;
+                // console.log(content);
             } else {
-                block.style.order = 2;
             }
 
             block.appendChild(content);
+
             region.appendChild(block);
         }
 
@@ -277,25 +334,18 @@ function render_markets(region, children) {
 }
 
 
-function render_region(region) {
+function render_item(item) {
 
-    // Start region block
-    var new_region_block = document.createElement('div');
-    new_region_block.classList.add('region');
+    // console.log(item);
 
-    var content = document.createElement('div');
-    content.classList.add('content');
+    switch (item.type) {
+        case 'market':
+            render_markets(root_block, [item.id]);
+            break;
 
-    if (region.hasChildren) {
-        var container = document.createElement('div');
-        container.classList.add('region');
-
-        render_markets(container, region.children);
-
-        render_locations(container, region.children);
-
-        root_block.appendChild(container);
-
+        case 'location':
+            render_locations(root_block, [item.id], false);
+            break;
     }
 
 }
@@ -303,13 +353,13 @@ function render_region(region) {
 
 function render() {
 
-    for (let region of regions_hashmap.values()) {
-
-        render_region(region);
-
+    if (locations_pq.isEmpty()) {
+        return;
     }
 
+    var save = locations_pq.dequeue();
+    render_item(save);
+    render();
 }
-
 
 start_fetch();
