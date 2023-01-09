@@ -80,12 +80,9 @@ h6,
   margin: 0;
   color: var(--grey-dark);
 }
-#content .container h6+p
-{
-  margin-top: -20px;
-}
 
-p
+p,
+li
 {
   font-family: var(--sans);
   font-size: var(--type6);
@@ -113,7 +110,7 @@ p.lead-text
 }
 
 :not(p) .wp-block-button__link,
-#content a:not(.location),
+#content :not(p) a:not(.location),
 #content :not(p) a:not(.location),
 footer a,
 #dining_dashboard button
@@ -136,7 +133,7 @@ footer a,
   cursor: pointer;
 }
 :not(p) .wp-block-button__link:hover,
-#content :not(p) > a:not(.location):hover,
+#content :not(p) a:not(.location):hover,
 footer a:hover,
 #dining_dashboard button:hover
 {
@@ -156,9 +153,22 @@ footer a:hover
 /*
 * Links included in paragraphs 
 */
-p > a {
-  color: var(--red-light);
-  text-underline-offset: 4px;
+body #content p a {
+  display: inline !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: transparent !important;
+  color: var(--red) !important;
+  text-underline-offset: 4px !important;
+  text-transform: none !important;
+  font-size: var(--type6) !important;
+  font-weight: normal !important;
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
+}
+body #content p a:hover {
+  color: var(--red-light) !important;
 }
 
 .linklist {
@@ -230,6 +240,10 @@ p > a {
 	/* text-transform: uppercase; */
 }
 
+#content .container {
+  display: flex;
+  flex-direction: column;
+}
 #content:not(.front-page) > .container {
   width: 70vw;
   padding: 90px 7.5vw;
@@ -238,6 +252,7 @@ p > a {
 #content:not(.front-page) > .container > *:not(:last-child){
   margin-bottom: 15px;
 }
+
 
 .wp-block-group {
   padding: 4rem;
@@ -301,6 +316,7 @@ article.merchants {
   overflow: hidden;
   border-bottom: 5px solid var(--red-light);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  margin-bottom: 60px !important;
 }
 .wp-block-washu-card:not(.washu-card__style-text-header) {
   flex-direction: row;
@@ -324,6 +340,7 @@ img
 .wp-block-washu-card:not(.washu-card__style-text-header) 
 .washu-card__grouping {
   display: flex;
+  justify-content: center;
   flex-direction: column;
   width: 55%;
   padding: 40px 0;
@@ -362,6 +379,9 @@ img
 }
 
 /* Color themes of WashU Blocks */
+.wp-block-washu-card + :not(.wp-block-washu-card) {
+  margin-top: 45px;
+}
 .wp-block-washu-card:not(.washu-card__style-text-header) .wp-block-button a {
   background-color: var(--white) !important;
   border-color: var(--red) !important;
@@ -413,4 +433,10 @@ If the block theme is blue, style the background red.
 }
 .wp-block-washu-card:not(.washu-card__style-text-header).blue .wp-block-button a:hover{
   color: var(--blue-dark) !important;
+}
+
+
+/* Featured */
+.featured_image {
+  background-color: #bebebe;
 }

@@ -1,5 +1,7 @@
 <?php
 
+require 'api/js_posts.php';
+
 // Including stylesheets and script files
 function load_scripts()
 {
@@ -113,3 +115,27 @@ function get_custom_cat_template($single_template) {
 } 
 add_filter( "single_template", "get_custom_cat_template" );
 
+
+
+// WordPress API Extension
+
+add_action('rest_api_init', function() {
+     register_rest_route('js/v1', '/locations', [
+          'methods' => 'GET',
+          'callback' => 'washu_dining_get_locations',
+     ]);
+});
+
+add_action('rest_api_init', function() {
+     register_rest_route('js/v1', '/events', [
+          'methods' => 'GET',
+          'callback' => 'washu_dining_get_events',
+     ]);
+});
+
+add_action('rest_api_init', function() {
+     register_rest_route('js/v1', '/events/(?P<id>\d+)', [
+          'methods' => 'GET',
+          'callback' => 'washu_dining_get_events_for_location',
+     ]);
+});

@@ -71,8 +71,7 @@
           <section class="subheader">
                <div class="container">
                     <div class="figure">
-                         <!-- <img src="the_post_thumbnail_url()"> -->
-                         <img src="<?php echo esc_url( get_template_directory_uri() . '/images/example.png'); ?>">
+                         <img src="<?php echo get_the_post_thumbnail_url($featured->ID); ?>">
                     </div>
                     <div class="content">
                          <h3><?php the_title(); ?></h3>

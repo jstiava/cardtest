@@ -79,7 +79,7 @@
                     if (true) {
                     ?>
                          <div class="figure">
-                              <img src="<?php echo esc_url( get_template_directory_uri() . '/images/example.png'); ?>">
+                              <img class="featured_image" src="<?php echo get_the_post_thumbnail_url($post->id); ?>">
                          </div>
                     <?php
                     };

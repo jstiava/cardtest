@@ -171,10 +171,12 @@ header .container {
   width: 275px;
   /* border: 1px solid var(--grey-light); */
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-  margin-top: 38px;
+  margin-top: 35px;
+  padding-top: 3px;
   border-radius: 0;
   overflow: hidden;
   flex-direction: column;
+  background-color: transparent;
   animation-name: popDown; animation-fill-mode: both; animation-duration: 0.3s;
 }
 .sub-menu li
@@ -315,6 +317,8 @@ section.subheader,
 section.page-header
 {
   display: flex;
+  align-items: center;
+  min-height: 450px;
   width: 100%;
   padding: 0;
   background-color: var(--white);

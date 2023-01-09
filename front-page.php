@@ -9,8 +9,8 @@
      <div class="sidebar front-page">
           <div class="container">
                <h6>Alerts</h6>
-               <?php
 
+               <?php
                $args = array(
                     'post_type' => 'post',
                     'category_name' => 'warning',
@@ -27,9 +27,7 @@
                endif;
                wp_reset_postdata();
                ?>
-               <a href="<?php echo get_home_url() . "/category/warning/"; ?>">See all alerts</a>
                
-               <?php get_sidebar(); ?>
           </div>
      </div>
 </div>
