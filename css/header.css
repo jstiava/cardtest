@@ -207,8 +207,11 @@ header .container {
 {
   filter: brightness(0) invert(1);
 }
+
+.sub-menu li.quick.darkteal {background-color: var(--turqoise);}
 .sub-menu li.quick.teal {background-color: var(--blue-teal);}
 .sub-menu li.quick.red {background-color: var(--red);}
+.sub-menu li.quick.lightred{background-color: var(--red-light);}
 .sub-menu li.quick.orange {background-color: var(--orange);}
 .sub-menu li.white {background-color: var(--white);}
 .sub-menu li * {
