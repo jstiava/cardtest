@@ -2,7 +2,7 @@
 
 require 'process_hours.php';
 
-function washu_dining_get_locations() {
+function washu_dining_get_locations($data) {
      $cat = get_term_by('slug', 'locations', 'category');
      $cat_id = $cat->term_id;
      $args = [

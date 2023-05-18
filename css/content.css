@@ -202,7 +202,7 @@ body #content p a:hover {
 .content .container > *:not(:last-child),
 .sidebar .container > *:not(:last-child)
 {
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 
 .content.front-page {
@@ -439,4 +439,51 @@ If the block theme is blue, style the background red.
 /* Featured */
 .featured_image {
   background-color: #bebebe;
+}
+
+
+/* People */
+.person_icon {
+  height: 100px;
+  width: 100px;
+}
+
+.content.people {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+  padding: 2vw 0;
+}
+
+.person_card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 500px;
+  width: 400px;
+  margin: 0 15px 15px 0;
+  padding: 30px;
+  background-color: #ffffff;
+  border: 2px solid var(--grey-light);
+}
+
+.person_card h5 {
+  text-align: center;
+}
+
+.person_card p {
+  margin: -5px 0 20px 0;
+}
+
+
+
+.person_card .portrait {
+  width: 250px;
+  height: 250px;
+  border-radius: 100vh;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid var(--grey-light);
 }

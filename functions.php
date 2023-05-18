@@ -28,6 +28,7 @@ function load_scripts()
           wp_enqueue_script('reload', get_template_directory_uri() . '/dashboard/reload.js', array(), '1.0', true);
           wp_enqueue_script('render', get_template_directory_uri() . '/dashboard/render.js', array(), '1.0', true);
           wp_enqueue_style('styles', get_template_directory_uri() . '/dashboard/styles.css', array(), '1.0', 'all');
+          return;
      }
 
 }
@@ -115,6 +116,44 @@ function get_custom_cat_template($single_template) {
 } 
 add_filter( "single_template", "get_custom_cat_template" );
 
+// Our custom post type function
+function create_posttype() {
+  
+     register_post_type( 'merchants',
+     // CPT Options
+         array(
+             'labels' => array(
+                 'name' => __( 'Merchants' ),
+                 'singular_name' => __( 'Merchant' )
+             ),
+             'public' => true,
+             'has_archive' => true,
+             'menu_icon' => 'dashicons-store',
+             'rewrite' => array('slug' => 'merchant'),
+             'show_in_rest' => true,
+         )
+     );
+
+     register_post_type( 'people',
+     // CPT Options
+         array(
+             'labels' => array(
+                 'name' => __( 'People' ),
+                 'singular_name' => __( 'Person' )
+             ),
+             'supports' => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
+             'public' => true,
+             'has_archive' => true,
+             'menu_icon' => 'dashicons-businessperson',
+             'rewrite' => array('slug' => 'person'),
+             'show_in_rest' => true,
+         )
+     );
+ }
+ // Hooking up our function to theme setup
+ add_action( 'init', 'create_posttype' );
+ 
+
 
 
 // WordPress API Extension
@@ -139,3 +178,18 @@ add_action('rest_api_init', function() {
           'callback' => 'washu_dining_get_events_for_location',
      ]);
 });
+
+function get_contrast_color($hex) {
+     if ($hex == null || $hex == "") {
+         return "#000000";
+     }
+ 
+     $red = hexdec(substr($hex, 1, 2));
+     $green = hexdec(substr($hex, 3, 2));
+     $blue = hexdec(substr($hex, 5, 2));
+ 
+     if (($red * 0.299 + $green * 0.587 + $blue * 0.114) > 186) {
+         return "#000000";
+     }
+     return "#ffffff";
+ }

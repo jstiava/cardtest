@@ -1,8 +1,6 @@
-<!-- 
-Template Name: Merchants 
--->
+<?php get_header('simple'); ?>
 
-<?php get_header(); ?>
+</header>
 
 <div class="wrapper">
      <div id="content" class="content">
@@ -10,18 +8,14 @@ Template Name: Merchants
                <?php
 
                $args = array(
-                    'post_type' => 'post',
-                    'category_name' => 'merchants',
+                    'post_type' => 'merchants',
                );
                $merchants = new WP_Query($args);
                if ($merchants->have_posts()) :
 
                     while ($merchants->have_posts()) :
                          $merchants->the_post();
-                         ?>
-                         <p><?php the_title(); ?></p>
-                         <?php
-
+                         get_template_part('template-parts/content', 'searchblock');
                     endwhile;
                endif;
                wp_reset_postdata();
