@@ -1,7 +1,5 @@
 <footer>
-     <a href=”https://wustl.edu/” style=“text-decoration: none”>
-          <img id="footer_shield" src="<?php echo esc_url( get_template_directory_uri() . '/icons/washu_digital.svg' ); ?>" alt="Washington University in St. Louis">
-     </a>
+     <img id="footer_shield" style="cursor: pointer;" onclick="window.location.href='https://wustl.edu/';" src="<?php echo esc_url(get_template_directory_uri() . '/icons/washu_digital.svg'); ?>" alt="Washington University in St. Louis">
      <h6>Campus Card Services</h6>
      <h6>Washington University in St. Louis</h6>
      <br>

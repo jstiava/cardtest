@@ -159,9 +159,9 @@ function create_posttype() {
 // WordPress API Extension
 
 add_action('rest_api_init', function() {
-     register_rest_route('js/v1', '/locations', [
+     register_rest_route('js/v1', '/merchants', [
           'methods' => 'GET',
-          'callback' => 'washu_dining_get_locations',
+          'callback' => 'washu_dining_get_merchants',
      ]);
 });
 

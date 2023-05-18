@@ -2,12 +2,9 @@
 
 require 'process_hours.php';
 
-function washu_dining_get_locations($data) {
-     $cat = get_term_by('slug', 'locations', 'category');
-     $cat_id = $cat->term_id;
+function washu_dining_get_merchants($data) {
      $args = [
-          'post_type'   => 'post',
-          'category' => $cat_id,
+          'post_type'   => 'merchants',
           'numberposts' => -1,
      ];
      $posts = get_posts( $args );
