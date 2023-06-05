@@ -487,3 +487,15 @@ If the block theme is blue, style the background red.
   background-position: center;
   border: 2px solid var(--grey-light);
 }
+
+
+/* Merchants Test */
+.buffer {
+  width: 100%;
+  height: 10vh;
+}
+
+#content.app {
+  width: 88vw !important;
+  margin: 0 auto;
+}

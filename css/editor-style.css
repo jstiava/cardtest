@@ -94,3 +94,17 @@ p.lead-text
   background-color: var(--white);
   color: var(--red);
 }
+
+.merchants-settings-container {
+  display: flex;
+}
+
+.form-container {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.merchant-posts-container {
+  flex: 1;
+}
+

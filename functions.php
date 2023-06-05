@@ -1,6 +1,9 @@
 <?php
 
-require 'api/js_posts.php';
+require 'api/endpoints.php';
+require 'api/custom_admin.php';
+
+
 
 // Including stylesheets and script files
 function load_scripts()
@@ -30,11 +33,11 @@ function load_scripts()
           wp_enqueue_style('styles', get_template_directory_uri() . '/dashboard/styles.css', array(), '1.0', 'all');
           return;
      }
-
 }
 
 add_action('wp_enqueue_scripts', 'load_scripts');
 
+// Implementation for an accessible menu experience for screen readers and link tabbing.
 class Menu_With_Description extends Walker_Nav_Menu
 {
      function start_el(&$output, $item, $depth = 0, $args = array(), $current_object_id = 0)
@@ -68,6 +71,7 @@ class Menu_With_Description extends Walker_Nav_Menu
      }
 }
 
+// Menus setup
 function learnwp_config()
 {
      // Registering menus
@@ -88,108 +92,302 @@ function learnwp_config()
 }
 add_action('after_setup_theme', 'learnwp_config', 0);
 
+
+
+// Register special metadata for hours of operation
+function register_encoded_hours_metadata()
+{
+     register_post_meta('merchants', 'js_test_value', [
+          'show_in_rest' => true,
+          'single' => true,
+          'type' => 'object',
+     ]);
+}
+
+add_action('init', 'register_encoded_hours_metadata');
+
+
+
 /**
  * Registers an editor stylesheet for the theme.
  */
 
-function stiavacard_add_editor_styles() {
+function stiavacard_add_editor_styles()
+{
      add_editor_style('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap', [], null);
      add_editor_style(get_template_directory_uri() . '/style.css');
      add_editor_style(get_template_directory_uri() . '/css/editor-style.css');
      add_editor_style(get_template_directory_uri() . '/css/events.css');
-     add_theme_support( 'editor-styles' );
+     add_theme_support('editor-styles');
 }
 
 add_action('after_setup_theme', 'stiavacard_add_editor_styles', 0);
 
-if ( function_exists('register_sidebar')) {
+
+
+if (function_exists('register_sidebar')) {
      register_sidebar();
 }
 
 
-function get_custom_cat_template($single_template) {
+// Helpful function for debugging, prints back-end content to the front-end by the console.
+function console_log($content)
+{
+     echo '<script>console.log(' . json_encode($content) . ');</script>';
+};
+
+
+
+// TODO: Integrate warning post types into standalone.
+function get_custom_cat_template($single_template)
+{
      global $post;
-     if ( in_category( 'warnings' )) {
-          $single_template = dirname( __FILE__ ) . '/single-warnings.php';
+     if (in_category('warnings')) {
+          $single_template = dirname(__FILE__) . '/single-warnings.php';
      }
      return $single_template;
-} 
-add_filter( "single_template", "get_custom_cat_template" );
+}
+add_filter("single_template", "get_custom_cat_template");
 
-// Our custom post type function
-function create_posttype() {
-  
-     register_post_type( 'merchants',
-     // CPT Options
-         array(
-             'labels' => array(
-                 'name' => __( 'Merchants' ),
-                 'singular_name' => __( 'Merchant' )
-             ),
-             'public' => true,
-             'has_archive' => true,
-             'menu_icon' => 'dashicons-store',
-             'rewrite' => array('slug' => 'merchant'),
-             'show_in_rest' => true,
-         )
+
+
+// Creates custom post types for merchants, people
+// Custom taxonomy for merchants called merchant categories
+
+function create_posttype()
+{
+
+     register_post_type(
+          'merchants',
+          array(
+               'labels' => array(
+                    'name' => __('Merchants'),
+                    'singular_name' => __('Merchant')
+               ),
+               'supports' => array('title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields',),
+               'public' => true,
+               'has_archive' => true,
+               'menu_icon' => get_template_directory_uri() . '/icons/bear_bucks_icon.svg',
+               'rewrite' => array('slug' => 'merchant'),
+               'show_in_rest' => true,
+          )
+     );
+     
+
+     register_post_type(
+          'people',
+          array(
+               'labels' => array(
+                    'name' => __('People'),
+                    'singular_name' => __('Person')
+               ),
+               'supports' => array('title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields',),
+               'public' => true,
+               'has_archive' => true,
+               'menu_icon' => 'dashicons-businessperson',
+               'rewrite' => array('slug' => 'person'),
+               'show_in_rest' => true,
+          )
      );
 
-     register_post_type( 'people',
-     // CPT Options
-         array(
-             'labels' => array(
-                 'name' => __( 'People' ),
-                 'singular_name' => __( 'Person' )
-             ),
-             'supports' => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
-             'public' => true,
-             'has_archive' => true,
-             'menu_icon' => 'dashicons-businessperson',
-             'rewrite' => array('slug' => 'person'),
-             'show_in_rest' => true,
-         )
+     register_taxonomy(
+          'merchant_categories', //taxonomy 
+          'merchants', //post-type
+          array(
+               'hierarchical'  => true,
+               'label'         => __('Merchant Categories'),
+               'singular_name' => __('Merchant Category'),
+               'rewrite'       => true,
+               'show_in_rest' => true,
+               'query_var'     => true,
+          )
      );
- }
- // Hooking up our function to theme setup
- add_action( 'init', 'create_posttype' );
- 
+}
+// Hooking up our function to theme setup
+add_action('init', 'create_posttype');
+
 
 
 
 // WordPress API Extension
 
-add_action('rest_api_init', function() {
+add_action('rest_api_init', function () {
      register_rest_route('js/v1', '/merchants', [
           'methods' => 'GET',
           'callback' => 'washu_dining_get_merchants',
+          'args' => [
+               'day' => [
+                    'required' => true,
+                    'type' => 'integer',
+               ],
+               'hour' => [
+                    'required' => false,
+                    'type' => 'integer',
+               ],
+               'minute' => [
+                    'required' => false,
+                    'type' => 'integer',
+               ],
+          ],
      ]);
 });
 
-add_action('rest_api_init', function() {
-     register_rest_route('js/v1', '/events', [
-          'methods' => 'GET',
-          'callback' => 'washu_dining_get_events',
-     ]);
-});
 
-add_action('rest_api_init', function() {
-     register_rest_route('js/v1', '/events/(?P<id>\d+)', [
-          'methods' => 'GET',
-          'callback' => 'washu_dining_get_events_for_location',
-     ]);
-});
-
-function get_contrast_color($hex) {
+// Returns best text color for background, white or black
+function get_contrast_color($hex)
+{
      if ($hex == null || $hex == "") {
-         return "#000000";
+          return "#000000";
      }
- 
+
      $red = hexdec(substr($hex, 1, 2));
      $green = hexdec(substr($hex, 3, 2));
      $blue = hexdec(substr($hex, 5, 2));
- 
+
      if (($red * 0.299 + $green * 0.587 + $blue * 0.114) > 186) {
-         return "#000000";
+          return "#000000";
      }
      return "#ffffff";
- }
+}
+
+
+
+
+/* Display the post meta box. */
+function smashing_post_class_meta_box($post)
+{ ?>
+
+     <?php wp_nonce_field(basename(__FILE__), 'smashing_post_class_nonce'); ?>
+
+     <p>
+          <textarea name="hours_of_operation_metabox" id="hours_of_operation_metabox" cols="30" rows="5"><?php echo esc_attr(get_post_meta($post->ID, 'hours_of_operation', true)); ?></textarea>
+     </p>
+<?php };
+
+
+
+
+// Remove comments
+
+add_action('admin_init', function () {
+     // Redirect any user trying to access comments page
+     global $pagenow;
+
+     if ($pagenow === 'edit-comments.php') {
+          wp_redirect(admin_url());
+          exit;
+     }
+
+     // Remove comments metabox from dashboard
+     remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
+
+     // Disable support for comments and trackbacks in post types
+     foreach (get_post_types() as $post_type) {
+          if (post_type_supports($post_type, 'comments')) {
+               remove_post_type_support($post_type, 'comments');
+               remove_post_type_support($post_type, 'trackbacks');
+          }
+     }
+});
+
+
+
+
+// Close comments on the front-end
+add_filter('comments_open', '__return_false', 20, 2);
+add_filter('pings_open', '__return_false', 20, 2);
+
+
+
+
+// Hide existing comments
+add_filter('comments_array', '__return_empty_array', 10, 2);
+
+
+
+
+// Remove comments page in menu
+add_action('admin_menu', function () {
+     remove_menu_page('edit-comments.php');
+});
+
+
+
+
+// Remove comments links from admin bar
+add_action('init', function () {
+     if (is_admin_bar_showing()) {
+          remove_action('admin_bar_menu', 'wp_admin_bar_comments_menu', 60);
+     }
+});
+
+
+
+
+//  Add hours of operation edit to quick edit
+
+// add custom column title for custom meta value
+// 'manage_pages_columns' or 'manage_edit-post_columns' both works
+function ws365150_add_custom_columns_title_pt($columns, $post_type)
+{
+     switch ($post_type) {
+          case 'merchants':
+               $columns['hours_of_operation_edit_meta'] = 'Hours of Operation'; // you may use __() later on for translation support
+               $columns['categories_of_merchant'] = 'Merchant Categories';
+               $columns['coordinates'] = 'Coordinates';
+               break;
+
+          default:
+
+               break;
+     }
+
+     return $columns;
+}
+add_filter('manage_posts_columns', 'ws365150_add_custom_columns_title_pt', 10, 2);
+
+
+
+
+
+
+
+function ws365150_add_custom_column_data_pt($column_name, $post_id)
+{
+     switch ($column_name) {
+          case 'hours_of_operation_edit_meta': // specified for this column assigned in the column title
+               echo get_post_meta($post_id, 'hours_of_operation', true);
+               break;
+          
+          case 'categories_of_merchant':
+               $cats = [];
+               $terms = get_the_terms($post_id, 'merchant_categories');
+
+               if ($terms == false) {
+                    echo "";
+                    break;
+               }
+
+               foreach ($terms as $term) {
+                    array_push($cats, $term->name);
+               };
+               
+               echo implode(', ', $cats);
+               break;
+               
+          case 'coordinates':
+               $cats = [];
+               $lat = get_post_meta($post_id, 'latitude', true);
+               $long = get_post_meta($post_id, 'longitude', true);
+
+               echo $lat . ', ' . $long;
+               break;
+
+               default:
+               break;
+          }
+     }
+     
+// add custom column data with custom meta value for custom post types
+add_action('manage_posts_custom_column', 'ws365150_add_custom_column_data_pt', 10, 2);
+

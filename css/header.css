@@ -428,6 +428,8 @@ section.page-header .figure img
 
 section.page-header .figure.merchant {
   justify-content: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 section.subheader .figure.merchant img,
 section.page-header .figure.merchant img

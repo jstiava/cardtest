@@ -1,0 +1,23 @@
+td {
+    width: 100%;
+  }
+  
+  .form-table td {
+    padding: 0;
+  }
+  
+  p.submit {
+    margin-top: 20px !important;
+  }
+  
+  
+  .form-wrap {
+    margin-bottom: 30px;
+    padding: 30px;
+    border: 1px solid #3d3d3d;
+    border-radius: 10px;
+  }
+
+  .col-wrap {
+    padding: 30px !important;
+  }

@@ -185,7 +185,7 @@
      }
      section:is(.subheader, .page-header) .figure {
           width: 100%;
-          height: fit-content;
+          height: 100%;
      }
      section:is(.subheader, .page-header) .figure img {
           height: 40vh;
