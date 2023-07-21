@@ -1,8 +1,6 @@
 <?php
 
-require 'api/endpoints.php';
 require 'api/custom_admin.php';
-
 
 
 // Including stylesheets and script files
@@ -79,6 +77,7 @@ function learnwp_config()
           array(
                'my_main_menu' => 'Main Menu',
                'quick_tools' => 'Quick Tools',
+               'footer' => 'Footer'
           )
      );
 
@@ -94,17 +93,7 @@ add_action('after_setup_theme', 'learnwp_config', 0);
 
 
 
-// Register special metadata for hours of operation
-function register_encoded_hours_metadata()
-{
-     register_post_meta('merchants', 'js_test_value', [
-          'show_in_rest' => true,
-          'single' => true,
-          'type' => 'object',
-     ]);
-}
 
-add_action('init', 'register_encoded_hours_metadata');
 
 
 
@@ -134,7 +123,8 @@ if (function_exists('register_sidebar')) {
 function console_log($content)
 {
      echo '<script>console.log(' . json_encode($content) . ');</script>';
-};
+}
+;
 
 
 
@@ -157,22 +147,6 @@ add_filter("single_template", "get_custom_cat_template");
 function create_posttype()
 {
 
-     register_post_type(
-          'merchants',
-          array(
-               'labels' => array(
-                    'name' => __('Merchants'),
-                    'singular_name' => __('Merchant')
-               ),
-               'supports' => array('title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields',),
-               'public' => true,
-               'has_archive' => true,
-               'menu_icon' => get_template_directory_uri() . '/icons/bear_bucks_icon.svg',
-               'rewrite' => array('slug' => 'merchant'),
-               'show_in_rest' => true,
-          )
-     );
-     
 
      register_post_type(
           'people',
@@ -181,7 +155,16 @@ function create_posttype()
                     'name' => __('People'),
                     'singular_name' => __('Person')
                ),
-               'supports' => array('title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields',),
+               'supports' => array(
+                    'title',
+                    'editor',
+                    'excerpt',
+                    'author',
+                    'thumbnail',
+                    'comments',
+                    'revisions',
+                    'custom-fields',
+               ),
                'public' => true,
                'has_archive' => true,
                'menu_icon' => 'dashicons-businessperson',
@@ -190,18 +173,6 @@ function create_posttype()
           )
      );
 
-     register_taxonomy(
-          'merchant_categories', //taxonomy 
-          'merchants', //post-type
-          array(
-               'hierarchical'  => true,
-               'label'         => __('Merchant Categories'),
-               'singular_name' => __('Merchant Category'),
-               'rewrite'       => true,
-               'show_in_rest' => true,
-               'query_var'     => true,
-          )
-     );
 }
 // Hooking up our function to theme setup
 add_action('init', 'create_posttype');
@@ -209,28 +180,66 @@ add_action('init', 'create_posttype');
 
 
 
+
+function jsmp1_edit_merchants_metadata($columns)
+{
+     $columns['hours_of_operation_edit_meta'] = __('Hours of Operation');
+     $columns['categories_of_merchant'] = __('Merchant Categories');
+     $columns['coordinates'] = __('Coordinates');
+     return $columns;
+}
+add_filter('manage_merchants_posts_columns', 'jsmp1_edit_merchants_metadata');
+
+
+function jsmp1_edit_merchants_metadata_originals($column_name, $post_id)
+{
+     switch ($column_name) {
+          case 'hours_of_operation_edit_meta':
+               echo "<strong>Standard Hours</strong><br>";
+               echo get_post_meta($post_id, 'hours_of_operation', true);
+               break;
+
+          case 'categories_of_merchant':
+               $cats = [];
+               $terms = get_the_terms($post_id, 'merchant_categories');
+
+               if (empty($terms)) {
+                    echo "";
+                    break;
+               }
+
+               foreach ($terms as $term) {
+                    $cats[] = $term->name;
+               }
+
+               echo implode(', ', $cats);
+               break;
+
+          case 'coordinates':
+               $lat = get_post_meta($post_id, 'latitude', true);
+               $long = get_post_meta($post_id, 'longitude', true);
+
+               if (empty($lat) || empty($long)) {
+                    echo "<strong style='color: #b32d2e;'>Unset</strong>";
+                    break;
+               }
+
+               echo $lat . ',<br>' . $long;
+               break;
+
+          default:
+               break;
+     }
+}
+
+add_action('manage_merchants_posts_custom_column', 'jsmp1_edit_merchants_metadata_originals', 10, 2);
+
+
+
+
 // WordPress API Extension
 
-add_action('rest_api_init', function () {
-     register_rest_route('js/v1', '/merchants', [
-          'methods' => 'GET',
-          'callback' => 'washu_dining_get_merchants',
-          'args' => [
-               'day' => [
-                    'required' => true,
-                    'type' => 'integer',
-               ],
-               'hour' => [
-                    'required' => false,
-                    'type' => 'integer',
-               ],
-               'minute' => [
-                    'required' => false,
-                    'type' => 'integer',
-               ],
-          ],
-     ]);
-});
+
 
 
 // Returns best text color for background, white or black
@@ -260,9 +269,11 @@ function smashing_post_class_meta_box($post)
      <?php wp_nonce_field(basename(__FILE__), 'smashing_post_class_nonce'); ?>
 
      <p>
-          <textarea name="hours_of_operation_metabox" id="hours_of_operation_metabox" cols="30" rows="5"><?php echo esc_attr(get_post_meta($post->ID, 'hours_of_operation', true)); ?></textarea>
+          <textarea name="hours_of_operation_metabox" id="hours_of_operation_metabox" cols="30"
+               rows="5"><?php echo esc_attr(get_post_meta($post->ID, 'hours_of_operation', true)); ?></textarea>
      </p>
-<?php };
+<?php }
+;
 
 
 
@@ -324,70 +335,190 @@ add_action('init', function () {
 
 
 
-//  Add hours of operation edit to quick edit
+// //  Add hours of operation edit to quick edit
 
-// add custom column title for custom meta value
-// 'manage_pages_columns' or 'manage_edit-post_columns' both works
-function ws365150_add_custom_columns_title_pt($columns, $post_type)
+// // add custom column title for custom meta value
+// // 'manage_pages_columns' or 'manage_edit-post_columns' both works
+// function ws365150_add_custom_columns_title_pt($columns, $post_type)
+// {
+//      switch ($post_type) {
+//           case 'merchants':
+//                $columns['hours_of_operation_edit_meta'] = 'Hours of Operation'; // you may use __() later on for translation support
+//                $columns['categories_of_merchant'] = 'Merchant Categories';
+//                $columns['coordinates'] = 'Coordinates';
+//                break;
+
+//           default:
+
+//                break;
+//      }
+
+//      return $columns;
+// }
+// add_filter('manage_posts_columns', 'ws365150_add_custom_columns_title_pt', 10, 2);
+
+
+
+
+
+
+
+// function ws365150_add_custom_column_data_pt($column_name, $post_id)
+// {
+//      switch ($column_name) {
+//           case 'hours_of_operation_edit_meta': // specified for this column assigned in the column title
+//                echo "<strong>Standard Hours</strong><br>";
+//                echo get_post_meta($post_id, 'hours_of_operation', true);
+//                break;
+
+//           case 'categories_of_merchant':
+//                $cats = [];
+//                $terms = get_the_terms($post_id, 'merchant_categories');
+
+//                if ($terms == false) {
+//                     echo "";
+//                     break;
+//                }
+
+//                foreach ($terms as $term) {
+//                     array_push($cats, $term->name);
+//                }
+//                ;
+
+//                echo implode(', ', $cats);
+//                break;
+
+//           case 'coordinates':
+//                $cats = [];
+//                $lat = get_post_meta($post_id, 'latitude', true);
+//                $long = get_post_meta($post_id, 'longitude', true);
+
+//                if ($lat == "" || $long == "") {
+//                     echo "<strong style='color: #b32d2e;'>Unset</strong>";
+//                     break;
+//                }
+
+//                echo $lat . ',<br>' . $long;
+//                break;
+
+//           default:
+//                break;
+//      }
+// }
+
+// // add custom column data with custom meta value for custom post types
+// add_action('manage_posts_custom_column', 'ws365150_add_custom_column_data_pt', 10, 2);
+
+
+
+function log_memory_usage()
 {
-     switch ($post_type) {
-          case 'merchants':
-               $columns['hours_of_operation_edit_meta'] = 'Hours of Operation'; // you may use __() later on for translation support
-               $columns['categories_of_merchant'] = 'Merchant Categories';
-               $columns['coordinates'] = 'Coordinates';
-               break;
+     // Get the current memory usage
+     $memory_usage = round(memory_get_usage() / 1024 / 1024, 2); // Convert to megabytes
 
-          default:
-
-               break;
-     }
-
-     return $columns;
+     // Log the memory usage to a file
+     error_log('Memory usage: ' . $memory_usage . ' MB');
 }
-add_filter('manage_posts_columns', 'ws365150_add_custom_columns_title_pt', 10, 2);
+add_action('init', 'log_memory_usage');
 
 
-
-
-
-
-
-function ws365150_add_custom_column_data_pt($column_name, $post_id)
+function consume_memory()
 {
-     switch ($column_name) {
-          case 'hours_of_operation_edit_meta': // specified for this column assigned in the column title
-               echo get_post_meta($post_id, 'hours_of_operation', true);
-               break;
-          
-          case 'categories_of_merchant':
-               $cats = [];
-               $terms = get_the_terms($post_id, 'merchant_categories');
+     $memory_limit = ini_get('memory_limit');
+     $memory_limit_bytes = wp_convert_hr_to_bytes($memory_limit);
 
-               if ($terms == false) {
-                    echo "";
-                    break;
-               }
+     // Allocate memory until the memory limit is reached
+     $buffer = str_repeat('a', $memory_limit_bytes + 1);
+}
 
-               foreach ($terms as $term) {
-                    array_push($cats, $term->name);
-               };
-               
-               echo implode(', ', $cats);
-               break;
-               
-          case 'coordinates':
-               $cats = [];
-               $lat = get_post_meta($post_id, 'latitude', true);
-               $long = get_post_meta($post_id, 'longitude', true);
 
-               echo $lat . ', ' . $long;
-               break;
 
-               default:
-               break;
+function display_server_cache()
+{
+     global $wp;
+     // Get the current page's URL
+     $current_url = home_url(add_query_arg(array(), $wp->request));
+
+     // Check if the page is cached
+     if (function_exists('wp_cache_get')) {
+          $cache_key = 'my_custom_cache_' . md5($current_url); // Create a unique cache key
+          $cached_content = wp_cache_get($cache_key); // Retrieve the cached content
+
+          if ($cached_content !== false) {
+               // Display the cached content
+               console_log($cached_content);
+          } else {
+               // Content not found in the cache
+               console_log('The page is not currently cached.');
           }
+     } else {
+          // Caching is not enabled
+          console_log('Caching is not enabled on this site.');
      }
-     
-// add custom column data with custom meta value for custom post types
-add_action('manage_posts_custom_column', 'ws365150_add_custom_column_data_pt', 10, 2);
+}
 
+//  add_action('init', 'display_server_cache');
+
+
+
+
+// Merchant Icon
+// 
+
+
+
+
+
+
+
+
+
+/*Deleting content when an ACF field is deleted is easy, relatively. Please note that the use of this function cannot be undone and it will erase all traces of content for any ACF field that is deleted. 
+
+Please be sure that this is something that you want to do before implementing this and I would strongly suggest that this is only enabled during development and not on a live site. Should a client go into ACF for some reason and delete a field, there is nothing that you’d be able to do to recover form it. */
+
+// this action is run by ACF whenever a field is deleted
+// and is called for every field in a field group when a field group is deleted
+add_action('acf/delete_field', 'delete_acf_content_on_delete_field');
+
+
+// https://gist.github.com/ivo-ivanov/8eba67712dd3ab14343c56c42e097a86
+function delete_acf_content_on_delete_field($field)
+{
+     // runs when acf deletes a field
+     // find all occurences of the field key in all tables and delete them
+     // and the custom field associated with them
+     global $wpdb;
+     // remove any tables from this array that you don't want to check
+     $tables = array('options', 'postmeta', 'termmeta', 'usermeta', 'commentmeta');
+     foreach ($tables as $table) {
+          $key_field = 'meta_key';
+          $value_field = 'meta_value';
+          if ($table == 'options') {
+               $key_field = 'option_name';
+               $value_field = 'option_value';
+          }
+          $table = $wpdb->{$table};
+          // this query gets all key fields matching the acf key reference field
+          $query = 'SELECT DISTINCT(' . $key_field . ')
+              FROM ' . $table . '
+              WHERE ' . $value_field . ' = "' . $field['key'] . '"';
+          $results = $wpdb->get_col($query);
+          if (!count($results)) {
+               // no content found in this table
+               continue;
+          }
+          // loop through keys and construct list of meta_key/option_names to delete
+          $keys = array();
+          foreach ($results as $key) {
+               $keys[] = $key; // delete acf field key reference
+               $keys[] = substr($key, 1); // delete acf field value
+          }
+          // do escping of all values.... just in case
+          $keys = $wpdb->_escape($keys);
+          // delete all of the content
+          $query = 'DELETE FROM ' . $table . '
+              WHERE ' . $key_field . ' IN ("' . implode('","', $keys) . '")';
+          $wpdb->query($query);
+     } // end foreach table
+}

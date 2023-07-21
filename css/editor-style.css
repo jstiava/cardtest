@@ -108,3 +108,7 @@ p.lead-text
   flex: 1;
 }
 
+.interface-interface-skeleton__sidebar
+{
+  overflow-x: hidden;
+}

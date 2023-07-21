@@ -36,3 +36,22 @@ footer h6 {
      width: 50px;
      margin-bottom: 10px;
 }
+
+
+/* Menu */
+#menu-footer {
+     display: flex;
+     padding: 0;
+     margin: 0;
+}
+
+#menu-footer .menu-item {
+     display: flex;
+     width: fit-content !important;
+     height: fit-content !important;
+}
+
+#menu-footer a {
+     padding: 0.5rem;
+     margin: 0 1rem 0 0;
+}

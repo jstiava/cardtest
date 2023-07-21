@@ -1,4 +1,5 @@
-<?php get_header('simple'); ?>
+<?php get_header('simple'); 
+?>
 
 <section class="page-header" style="background-color: <?php echo get_field('primary_color'); ?>; height: 70vh">
   <div class="container" style="color: <?php echo get_contrast_color(get_field('primary_color')) ?>">

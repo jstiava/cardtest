@@ -10,7 +10,7 @@ header
 
 #wordmark
 {
-  max-height: 50px;
+  max-height: 3.5rem;
   margin: 10px 0;
 }
 #wordmark_mobile,
@@ -24,12 +24,12 @@ header
 header section
 {
   width: 100%;
-  padding: 0px 6%;
+  padding: 0px 6rem;
   height: fit-content;
 }
 header .main-bar
 {
-  padding: 25px 6%;
+  padding: 2rem 6rem;
 }
 header .menu-bar
 {
