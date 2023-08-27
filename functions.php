@@ -114,17 +114,27 @@ add_action('after_setup_theme', 'stiavacard_add_editor_styles', 0);
 
 
 
-if (function_exists('register_sidebar')) {
-     register_sidebar();
+function wp_stiava_card_register_sidebar()
+{
+     register_sidebar(
+          array(
+               'name'          => esc_html__('Sidebar', 'theme-name'),
+               'id'            => 'sidebar-1',
+               'description'   => esc_html__('Add widgets here.', 'theme-name'),
+               'before_widget' => '<div id="%1$s" class="widget %2$s">',
+               'after_widget'  => '</div>',
+               'before_title'  => '<h3 class="widget-title">',
+               'after_title'   => '</h3>',
+          )
+     );
 }
-
+add_action('widgets_init', 'wp_stiava_card_register_sidebar');
 
 // Helpful function for debugging, prints back-end content to the front-end by the console.
 function console_log($content)
 {
      echo '<script>console.log(' . json_encode($content) . ');</script>';
-}
-;
+};
 
 
 
@@ -172,7 +182,6 @@ function create_posttype()
                'show_in_rest' => true,
           )
      );
-
 }
 // Hooking up our function to theme setup
 add_action('init', 'create_posttype');
@@ -269,11 +278,9 @@ function smashing_post_class_meta_box($post)
      <?php wp_nonce_field(basename(__FILE__), 'smashing_post_class_nonce'); ?>
 
      <p>
-          <textarea name="hours_of_operation_metabox" id="hours_of_operation_metabox" cols="30"
-               rows="5"><?php echo esc_attr(get_post_meta($post->ID, 'hours_of_operation', true)); ?></textarea>
+          <textarea name="hours_of_operation_metabox" id="hours_of_operation_metabox" cols="30" rows="5"><?php echo esc_attr(get_post_meta($post->ID, 'hours_of_operation', true)); ?></textarea>
      </p>
-<?php }
-;
+<?php };
 
 
 

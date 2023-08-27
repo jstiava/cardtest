@@ -122,3 +122,74 @@ Tags: custom-header, custom-menu
 {
   align-items: center;
 }
+
+
+
+/* Gap */
+.washu-card__style-text-header .washu-card__grouping {
+	padding-top: 0 !important;
+}
+
+
+.wp-block-washu-card:not(.washu-card__style-text-header) .washu-card__grouping:last-child
+{
+	display: flex !important;
+}
+
+.washu-card__title, .washu-card__content,
+.washu-card__image
+{
+	border: none !important;
+}
+
+.washu-card__title {
+	padding: 0 50px 15px 50px;
+}
+
+.content .container > :not(:last-child), .sidebar .container > :not(:last-child) {
+	margin-bottom: 15px;
+}
+
+.wp-container-4 {
+	margin: 30px 0 !important;
+}
+
+.wp-block-washu-card p {
+	margin-bottom: 15px;
+}
+
+.menu-item:hover .sub-menu {
+	display: flex !important;
+}
+
+.menu-item a.ariaSelected .sub-menu {
+	display: none;
+}
+
+.menu-item .sub-menu {
+	display: none !important;
+}
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  /* Chrome-specific styles here */
+  .menu-bar.fixed {
+		display: none !important;
+	}
+}
+
+
+.footer_menu ul {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	height: fit-content;
+	margin: 0;
+	padding: 0;
+  max-width: 600px;
+}
+
+
+.footer_menu li {
+	margin: 0 8px 8px 0;
+}
